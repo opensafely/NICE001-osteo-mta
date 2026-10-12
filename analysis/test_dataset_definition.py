@@ -5,7 +5,17 @@ from dataset_definition import dataset
 
 test_data = {
     # A GP hip-fracture event occurs two months before the candidate admission.
-    1: {
+    1: {    
+        "patients": {
+            "date_of_birth": date(1980, 1, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2018, 1, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],
         "apcs": [
             {
                 "apcs_ident": 1,
@@ -35,7 +45,17 @@ test_data = {
     },
 
     # One GP event is too old and the other occurs after the admission.
-    2: {
+    2: {        
+        "patients": {
+            "date_of_birth": date(1980, 1, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2018, 1, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],        
         "apcs": [
             {
                 "apcs_ident": 2,
@@ -70,7 +90,17 @@ test_data = {
 
     # The earlier hospital admission occurred during an excluded wave,
     # but it should still count in the six-month lookback.
-    3: {
+    3: {        
+        "patients": {
+            "date_of_birth": date(1980, 1, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2018, 1, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],
         "apcs": [
             {
                 "apcs_ident": 3,
@@ -102,6 +132,16 @@ test_data = {
     # The first candidate fails because of a recent GP event.
     # The second candidate occurs after a six-month fracture-free interval.
     4: {
+        "patients": {
+            "date_of_birth": date(1980, 1, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2018, 1, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],
         "apcs": [
             {
                 "apcs_ident": 5,
@@ -144,6 +184,16 @@ test_data = {
     # candidate date. A hip code in a secondary diagnosis position should
     # also be identified.
     5: {
+        "patients": {
+            "date_of_birth": date(1980, 1, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2018, 1, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],
         "apcs": [
             {
                 "apcs_ident": 7,
@@ -185,6 +235,16 @@ test_data = {
     # A hospital hip-fracture record exactly six months before the next
     # candidate is included in the lookback, so the later candidate fails.
     6: {
+        "patients": {
+            "date_of_birth": date(1980, 1, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2018, 1, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],
         "apcs": [
             {
                 "apcs_ident": 10,
@@ -220,6 +280,16 @@ test_data = {
     # Eleven distinct candidate dates should populate the first ten date
     # columns and set the overflow flag.
     7: {
+        "patients": {
+            "date_of_birth": date(1980, 1, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2018, 1, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],
         "apcs": [
             {
                 "apcs_ident": 12,
@@ -290,7 +360,17 @@ test_data = {
 
     # A GP hip-fracture record on the same date as the hospital admission
     # is not a prior event, so the candidate passes the six-month rule.
-    8: {
+    8: {        
+        "patients": {
+            "date_of_birth": date(1980, 1, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2018, 1, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],
         "apcs": [
             {
                 "apcs_ident": 23,
@@ -322,6 +402,16 @@ test_data = {
     # An unrelated admission inside the study period and a hip-fracture
     # admission after the study end do not place the patient in the population.
     9: {
+        "patients": {
+            "date_of_birth": date(1980, 1, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2018, 1, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],
         "apcs": [
             {
                 "apcs_ident": 24,
@@ -338,4 +428,127 @@ test_data = {
         "expected_in_population": False,
     },
 
+    # The patient is under 18 at the first candidate date but is 18 at the
+    # second candidate date. Both candidates pass the six-month rule.
+    10: {
+        "patients": {
+            "date_of_birth": date(2006, 9, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2020, 1, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],
+        "apcs": [
+            {
+                "apcs_ident": 26,
+                "admission_date": date(2024, 6, 1),
+                "all_diagnoses": "||S720",
+            },
+            {
+                "apcs_ident": 27,
+                "admission_date": date(2025, 6, 1),
+                "all_diagnoses": "||S721",
+            },
+        ],
+        "clinical_events": [],
+        "expected_in_population": True,
+        "expected_columns": {
+            "candidate_hip_date_1": date(2024, 6, 1),
+            "candidate_hip_passes_6m_rule_1": True,
+            "candidate_hip_age_1": 17,
+            "candidate_hip_age_eligible_1": False,
+            "candidate_hip_has_3m_registration_1": True,
+            "candidate_hip_is_eligible_index_1": False,
+
+            "candidate_hip_date_2": date(2025, 6, 1),
+            "candidate_hip_passes_6m_rule_2": True,
+            "candidate_hip_age_2": 18,
+            "candidate_hip_age_eligible_2": True,
+            "candidate_hip_has_3m_registration_2": True,
+            "candidate_hip_is_eligible_index_2": True,
+
+            "has_more_than_10_candidate_hip_dates": False,
+        },
+    },
+        
+    # The patient has less than three months' registration at the first
+    # candidate date but sufficient registration at the second candidate date.
+    11: {
+        "patients": {
+            "date_of_birth": date(1980, 1, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2024, 3, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],
+        "apcs": [
+            {
+                "apcs_ident": 28,
+                "admission_date": date(2024, 5, 1),
+                "all_diagnoses": "||S720",
+            },
+            {
+                "apcs_ident": 29,
+                "admission_date": date(2024, 12, 1),
+                "all_diagnoses": "||S721",
+            },
+        ],
+        "clinical_events": [],
+        "expected_in_population": True,
+        "expected_columns": {
+            "candidate_hip_date_1": date(2024, 5, 1),
+            "candidate_hip_passes_6m_rule_1": True,
+            "candidate_hip_age_eligible_1": True,
+            "candidate_hip_has_3m_registration_1": False,
+            "candidate_hip_is_eligible_index_1": False,
+
+            "candidate_hip_date_2": date(2024, 12, 1),
+            "candidate_hip_prior_hospital_count_6m_2": 0,
+            "candidate_hip_passes_6m_rule_2": True,
+            "candidate_hip_age_eligible_2": True,
+            "candidate_hip_has_3m_registration_2": True,
+            "candidate_hip_is_eligible_index_2": True,
+
+            "has_more_than_10_candidate_hip_dates": False,
+        },
+    },
+
+    # A patient who is exactly 18 and has exactly three months of continuous
+    # registration on the candidate date meets both eligibility criteria.
+    12: {
+        "patients": {
+            "date_of_birth": date(2006, 6, 1),
+        },
+        "practice_registrations": [
+            {
+                "start_date": date(2024, 3, 1),
+                "end_date": None,
+                "practice_pseudo_id": 100,
+            },
+        ],
+        "apcs": [
+            {
+                "apcs_ident": 30,
+                "admission_date": date(2024, 6, 1),
+                "all_diagnoses": "||S720",
+            },
+        ],
+        "clinical_events": [],
+        "expected_in_population": True,
+        "expected_columns": {
+            "candidate_hip_date_1": date(2024, 6, 1),
+            "candidate_hip_passes_6m_rule_1": True,
+            "candidate_hip_age_1": 18,
+            "candidate_hip_age_eligible_1": True,
+            "candidate_hip_has_3m_registration_1": True,
+            "candidate_hip_is_eligible_index_1": True,
+            "has_more_than_10_candidate_hip_dates": False,
+        },
+    },
 }

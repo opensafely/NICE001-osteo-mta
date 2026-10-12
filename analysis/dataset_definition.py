@@ -2,7 +2,13 @@
 # candidate dates. This is not the final eligible analysis cohort.
 
 from ehrql import create_dataset, codelist_from_csv, months
-from ehrql.tables.tpp import apcs, clinical_events
+
+from ehrql.tables.tpp import (
+    apcs,
+    clinical_events,
+    patients,
+    practice_registrations,
+)
 
 dataset = create_dataset()
 
@@ -98,6 +104,29 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
     passes_6m_rule = (
         candidate_date.is_not_null()
         & ~has_prior_hip_fracture_6m_for_candidate
+    )     
+    
+    age_at_candidate_date = patients.age_on(candidate_date)
+
+    age_eligible = (
+        candidate_date.is_not_null()
+        & (age_at_candidate_date >= 18)
+    )
+
+    has_3m_registration = (
+        candidate_date.is_not_null()
+        & practice_registrations
+        .spanning(
+            candidate_date - months(3),
+            candidate_date,
+        )
+        .exists_for_patient()
+    )
+
+    is_eligible_index = (
+        passes_6m_rule
+        & age_eligible
+        & has_3m_registration
     )
 
     dataset.add_column(
@@ -123,6 +152,26 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
     dataset.add_column(
         f"candidate_hip_passes_6m_rule_{candidate_number}",
         passes_6m_rule,
+    )
+
+    dataset.add_column(
+        f"candidate_hip_age_{candidate_number}",
+        age_at_candidate_date,
+    )
+
+    dataset.add_column(
+        f"candidate_hip_age_eligible_{candidate_number}",
+        age_eligible,
+    )
+
+    dataset.add_column(
+        f"candidate_hip_has_3m_registration_{candidate_number}",
+        has_3m_registration,
+    )
+
+    dataset.add_column(
+        f"candidate_hip_is_eligible_index_{candidate_number}",
+        is_eligible_index,
     )
 
     remaining_candidate_hip_admissions = (
