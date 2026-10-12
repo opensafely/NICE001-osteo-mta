@@ -61,115 +61,87 @@ hip_gp_events = clinical_events.where(
     clinical_events.snomedct_code.is_in(hip_fracture_snomed_codes)
 )
 
-first_hip_gp_event = (
-    hip_gp_events
-    .sort_by(clinical_events.date)
-    .first_for_patient()
-)
+dataset.define_population(candidate_hip_admissions.exists_for_patient())
 
-first_hip_admission = (
-    candidate_hip_admissions
-    .sort_by(apcs.admission_date)
-    .first_for_patient()
-)
+MAX_CANDIDATE_DATES = 10
 
-index_date_for_qa = first_hip_admission.admission_date
+remaining_candidate_hip_admissions = candidate_hip_admissions
 
-prior_hip_admissions_6m = hip_admissions.where(
-    apcs.admission_date.is_on_or_after(
-        index_date_for_qa - months(6)
+for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
+    candidate_admission = (
+        remaining_candidate_hip_admissions
+        .sort_by(apcs.admission_date)
+        .first_for_patient()
     )
-    & apcs.admission_date.is_before(index_date_for_qa)
-)
 
-prior_hip_gp_events_6m = hip_gp_events.where(
-    clinical_events.date.is_on_or_after(
-        index_date_for_qa - months(6)
+    candidate_date = candidate_admission.admission_date
+    
+    prior_hip_admissions_6m_for_candidate = hip_admissions.where(
+        apcs.admission_date.is_on_or_after(
+            candidate_date - months(6)
+        )
+        & apcs.admission_date.is_before(candidate_date)
     )
-    & clinical_events.date.is_before(index_date_for_qa)
-)
 
-last_prior_hip_admission_6m = (
-    prior_hip_admissions_6m
-    .sort_by(apcs.admission_date)
-    .last_for_patient()
-)
+    prior_hip_gp_events_6m_for_candidate = hip_gp_events.where(
+        clinical_events.date.is_on_or_after(
+            candidate_date - months(6)
+        )
+        & clinical_events.date.is_before(candidate_date)
+    )
 
-last_prior_hip_gp_event_6m = (
-    prior_hip_gp_events_6m
-    .sort_by(clinical_events.date)
-    .last_for_patient()
-)
+    has_prior_hip_fracture_6m_for_candidate = (
+        prior_hip_admissions_6m_for_candidate.exists_for_patient()
+        | prior_hip_gp_events_6m_for_candidate.exists_for_patient()
+    )
 
+    passes_6m_rule = (
+        candidate_date.is_not_null()
+        & ~has_prior_hip_fracture_6m_for_candidate
+    )
 
-second_hip_admission = (
-    candidate_hip_admissions
-    .where(
-        apcs.admission_date.is_after(
-            first_hip_admission.admission_date
+    dataset.add_column(
+        f"candidate_hip_date_{candidate_number}",
+        candidate_date,
+    )
+
+    dataset.add_column(
+        f"candidate_hip_prior_hospital_count_6m_{candidate_number}",
+        prior_hip_admissions_6m_for_candidate.count_for_patient(),
+    )
+
+    dataset.add_column(
+        f"candidate_hip_prior_gp_count_6m_{candidate_number}",
+        prior_hip_gp_events_6m_for_candidate.count_for_patient(),
+    )
+
+    dataset.add_column(
+        f"candidate_hip_has_prior_fracture_6m_{candidate_number}",
+        has_prior_hip_fracture_6m_for_candidate,
+    )
+
+    dataset.add_column(
+        f"candidate_hip_passes_6m_rule_{candidate_number}",
+        passes_6m_rule,
+    )
+
+    remaining_candidate_hip_admissions = (
+        remaining_candidate_hip_admissions.where(
+            apcs.admission_date.is_after(candidate_date)
         )
     )
-    .sort_by(apcs.admission_date)
-    .first_for_patient()
+    
+dataset.add_column(
+    f"has_more_than_{MAX_CANDIDATE_DATES}_candidate_hip_dates",
+    remaining_candidate_hip_admissions.exists_for_patient(),
 )
 
-second_index_date_for_qa = second_hip_admission.admission_date
-
-prior_hip_admissions_6m_before_second = hip_admissions.where(
-    apcs.admission_date.is_on_or_after(
-        second_index_date_for_qa - months(6)
-    )
-    & apcs.admission_date.is_before(second_index_date_for_qa)
+dataset.number_of_candidate_hip_admission_records = (
+    candidate_hip_admissions.count_for_patient()
 )
 
-prior_hip_gp_events_6m_before_second = hip_gp_events.where(
-    clinical_events.date.is_on_or_after(
-        second_index_date_for_qa - months(6)
-    )
-    & clinical_events.date.is_before(second_index_date_for_qa)
-)
-
-dataset.define_population(candidate_hip_admissions.exists_for_patient())
-dataset.first_hip_admission_date = first_hip_admission.admission_date
-dataset.number_of_candidate_hip_admissions = candidate_hip_admissions.count_for_patient()
-
-dataset.first_hip_gp_event_date = first_hip_gp_event.date
 dataset.number_of_hip_gp_events = hip_gp_events.count_for_patient()
 
-dataset.number_of_prior_hip_admissions_6m = (
-    prior_hip_admissions_6m.count_for_patient()
-)
 
-dataset.number_of_prior_hip_gp_events_6m = (
-    prior_hip_gp_events_6m.count_for_patient()
-)
 
-dataset.last_prior_hip_admission_date_6m = (
-    last_prior_hip_admission_6m.admission_date
-)
 
-dataset.last_prior_hip_gp_event_date_6m = (
-    last_prior_hip_gp_event_6m.date
-)
-
-dataset.has_prior_hip_fracture_6m = (
-    prior_hip_admissions_6m.exists_for_patient()
-    | prior_hip_gp_events_6m.exists_for_patient()
-)
-
-dataset.second_hip_admission_date = (
-    second_hip_admission.admission_date
-)
-
-dataset.number_of_prior_hip_admissions_6m_before_second = (
-    prior_hip_admissions_6m_before_second.count_for_patient()
-)
-
-dataset.number_of_prior_hip_gp_events_6m_before_second = (
-    prior_hip_gp_events_6m_before_second.count_for_patient()
-)
-
-dataset.has_prior_hip_fracture_6m_before_second = (
-    prior_hip_admissions_6m_before_second.exists_for_patient()
-    | prior_hip_gp_events_6m_before_second.exists_for_patient()
-)
