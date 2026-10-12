@@ -288,4 +288,54 @@ test_data = {
         },
     },
 
+    # A GP hip-fracture record on the same date as the hospital admission
+    # is not a prior event, so the candidate passes the six-month rule.
+    8: {
+        "apcs": [
+            {
+                "apcs_ident": 23,
+                "admission_date": date(2024, 6, 1),
+                "all_diagnoses": "||S720",
+            },
+        ],
+        "clinical_events": [
+            {
+                "date": date(2024, 6, 1),
+                "snomedct_code": "5913000",
+            },
+        ],
+        "expected_in_population": True,
+        "expected_columns": {
+            "number_of_candidate_hip_admission_records": 1,
+            "number_of_hip_gp_events": 1,
+            "candidate_hip_date_1": date(2024, 6, 1),
+            "candidate_hip_prior_hospital_count_6m_1": 0,
+            "candidate_hip_prior_gp_count_6m_1": 0,
+            "candidate_hip_has_prior_fracture_6m_1": False,
+            "candidate_hip_passes_6m_rule_1": True,
+            "candidate_hip_date_2": None,
+            "candidate_hip_passes_6m_rule_2": False,
+            "has_more_than_10_candidate_hip_dates": False,
+        },
+    },
+
+    # An unrelated admission inside the study period and a hip-fracture
+    # admission after the study end do not place the patient in the population.
+    9: {
+        "apcs": [
+            {
+                "apcs_ident": 24,
+                "admission_date": date(2024, 6, 1),
+                "all_diagnoses": "||K219",
+            },
+            {
+                "apcs_ident": 25,
+                "admission_date": date(2026, 2, 1),
+                "all_diagnoses": "||S720",
+            },
+        ],
+        "clinical_events": [],
+        "expected_in_population": False,
+    },
+
 }
