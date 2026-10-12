@@ -13,42 +13,42 @@ from ehrql.tables.tpp import (
 dataset = create_dataset()
 
 hip_fracture_icd_codes = codelist_from_csv(
-    "codelists/hip-fracture-incident-icd10-md.csv",
+    "local_codelists/hip-fracture-incident-icd10-md.csv",
     column="code",
 )
 
 hip_fracture_snomed_codes = codelist_from_csv(
-    "codelists/hip-fracture-incident-snomed-pm.csv",
+    "local_codelists/hip-fracture-incident-snomed-pm.csv",
     column="code",
 )
 
 vertebral_fracture_icd_codes = codelist_from_csv(
-    "codelists/vertebral-fracture-incident-icd10-xi.csv",
+    "local_codelists/vertebral-fracture-incident-icd10-xi.csv",
     column="code",
 )
 
 vertebral_fracture_snomed_codes = codelist_from_csv(
-    "codelists/vertebral-fracture-incident-snomed-pm.csv",
+    "local_codelists/vertebral-fracture-incident-snomed-pm.csv",
     column="code",
 )
 
 wrist_fracture_icd_codes = codelist_from_csv(
-    "codelists/wrist-fracture-incident-icd10-xi.csv",
+    "local_codelists/wrist-fracture-incident-icd10-xi.csv",
     column="code",
 )
 
 wrist_fracture_snomed_codes = codelist_from_csv(
-    "codelists/wrist-fracture-incident-snomed-xi.csv",
+    "local_codelists/wrist-fracture-incident-snomed-xi.csv",
     column="code",
 )
 
 prox_humerus_fracture_icd_codes = codelist_from_csv(
-    "codelists/prox-humerus-fracture-incident-icd10-xi.csv",
+    "local_codelists/prox-humerus-fracture-incident-icd10-xi.csv",
     column="code",
 )
 
 prox_humerus_fracture_snomed_codes = codelist_from_csv(
-    "codelists/prox-humerus-fracture-incident-snomed-xi.csv",
+    "local_codelists/prox-humerus-fracture-incident-snomed-xi.csv",
     column="code",
 )
 
