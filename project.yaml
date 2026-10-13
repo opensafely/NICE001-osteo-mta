@@ -18,4 +18,13 @@ actions:
     needs: [generate_hip_event_level]
     outputs:
       highly_sensitive:
-        candidate_events: output/hip_candidate_events_long.csv
+        hip_candidate_events: output/hip_candidate_events_long.csv
+
+  check_hip_wide_long_consistency:
+    run: python:v2 python analysis/check_hip_wide_long_consistency.py
+    needs:
+      - generate_hip_event_level
+      - build_hip_event_cohort
+    outputs:
+      highly_sensitive:
+        consistency_summary: output/hip_wide_long_consistency.txt
