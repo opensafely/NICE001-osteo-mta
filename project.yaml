@@ -47,3 +47,23 @@ actions:
     outputs:
       highly_sensitive:
         wrist_event_cohort_check: output/wrist_event_cohort_check.txt
+
+  generate_vertebral_event_level:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_vertebral_event_level.py --dummy-tables analysis/dummy_tables/vertebral_event_level --output output/vertebral_event_level_qa/:csv
+    outputs:
+      highly_sensitive:
+        event_level_files: output/vertebral_event_level_qa/*.csv
+
+  build_vertebral_event_cohort:
+    run: python:v2 python analysis/build_vertebral_event_cohort.py
+    needs: [generate_vertebral_event_level]
+    outputs:
+      highly_sensitive:
+        vertebral_candidate_events: output/vertebral_candidate_events_long.csv
+
+  check_vertebral_event_cohort:
+    run: python:v2 python analysis/check_vertebral_event_cohort.py
+    needs: [build_vertebral_event_cohort]
+    outputs:
+      highly_sensitive:
+        vertebral_event_cohort_check: output/vertebral_event_cohort_check.txt
