@@ -7,6 +7,21 @@ actions:
       highly_sensitive:
         dataset: output/dataset.csv.gz
 
+  select_hip_index_event:
+    run: python:v2 python analysis/select_hip_index_event.py
+    needs: [generate_dataset]
+    outputs:
+      highly_sensitive:
+        selected_cases: output/selected_hip_index_cases.csv
+        selection_qa: output/selected_hip_index_cases_qa.csv
+  check_hip_index_selection:
+    run: python:v2 python analysis/check_hip_index_selection.py
+    needs:
+      - generate_dataset
+      - select_hip_index_event
+    outputs:
+      highly_sensitive:
+        selection_check: output/hip_index_selection_check.txt
   generate_hip_event_level:
     run: ehrql:v1 generate-dataset analysis/dataset_definition_event_level.py --test-data-file analysis/test_dataset_definition.py --output output/hip_event_level_pipeline/:csv
     outputs:
