@@ -40,7 +40,7 @@ test_data = {
             "candidate_hip_passes_6m_rule_1": False,
             "candidate_hip_date_2": None,
             "candidate_hip_passes_6m_rule_2": False,
-            "has_more_than_10_candidate_hip_dates": False,
+            "has_more_than_15_candidate_hip_dates": False,
         },
     },
 
@@ -84,7 +84,7 @@ test_data = {
             "candidate_hip_passes_6m_rule_1": True,
             "candidate_hip_date_2": None,
             "candidate_hip_passes_6m_rule_2": False,
-            "has_more_than_10_candidate_hip_dates": False,
+            "has_more_than_15_candidate_hip_dates": False,
         },
     },
 
@@ -125,7 +125,7 @@ test_data = {
             "candidate_hip_passes_6m_rule_1": False,
             "candidate_hip_date_2": None,
             "candidate_hip_passes_6m_rule_2": False,
-            "has_more_than_10_candidate_hip_dates": False,
+            "has_more_than_15_candidate_hip_dates": False,
         },
     },
 
@@ -176,7 +176,7 @@ test_data = {
             "candidate_hip_passes_6m_rule_2": True,
             "candidate_hip_date_3": None,
             "candidate_hip_passes_6m_rule_3": False,
-            "has_more_than_10_candidate_hip_dates": False,
+            "has_more_than_15_candidate_hip_dates": False,
         },
     },
 
@@ -228,7 +228,7 @@ test_data = {
             "candidate_hip_passes_6m_rule_2": True,
             "candidate_hip_date_3": None,
             "candidate_hip_passes_6m_rule_3": False,
-            "has_more_than_10_candidate_hip_dates": False,
+            "has_more_than_15_candidate_hip_dates": False,
         },
     },
 
@@ -273,7 +273,7 @@ test_data = {
             "candidate_hip_passes_6m_rule_2": False,
             "candidate_hip_date_3": None,
             "candidate_hip_passes_6m_rule_3": False,
-            "has_more_than_10_candidate_hip_dates": False,
+            "has_more_than_15_candidate_hip_dates": False,
         },
     },
 
@@ -346,15 +346,40 @@ test_data = {
                 "admission_date": date(2022, 11, 1),
                 "all_diagnoses": "||S720",
             },
+            {
+                "apcs_ident": 31,
+                "admission_date": date(2022, 12, 1),
+                "all_diagnoses": "||S720",
+            },
+            {
+                "apcs_ident": 32,
+                "admission_date": date(2023, 1, 1),
+                "all_diagnoses": "||S720",
+            },
+            {
+                "apcs_ident": 33,
+                "admission_date": date(2023, 2, 1),
+                "all_diagnoses": "||S720",
+            },
+            {
+                "apcs_ident": 34,
+                "admission_date": date(2023, 3, 1),
+                "all_diagnoses": "||S720",
+            },
+            {
+                "apcs_ident": 35,
+                "admission_date": date(2023, 4, 1),
+                "all_diagnoses": "||S720",
+            },
         ],
         "clinical_events": [],
         "expected_in_population": True,
         "expected_columns": {
-            "number_of_candidate_hip_admission_records": 11,
+            "number_of_candidate_hip_admission_records": 16,
             "number_of_hip_gp_events": 0,
             "candidate_hip_date_1": date(2022, 1, 1),
-            "candidate_hip_date_10": date(2022, 10, 1),
-            "has_more_than_10_candidate_hip_dates": True,
+            "candidate_hip_date_15": date(2023, 3, 1),
+            "has_more_than_15_candidate_hip_dates": True,
         },
     },
 
@@ -395,7 +420,7 @@ test_data = {
             "candidate_hip_passes_6m_rule_1": True,
             "candidate_hip_date_2": None,
             "candidate_hip_passes_6m_rule_2": False,
-            "has_more_than_10_candidate_hip_dates": False,
+            "has_more_than_15_candidate_hip_dates": False,
         },
     },
 
@@ -460,21 +485,21 @@ test_data = {
             "candidate_hip_passes_6m_rule_1": True,
             "candidate_hip_age_1": 17,
             "candidate_hip_age_eligible_1": False,
-            "candidate_hip_has_3m_registration_1": True,
+            "candidate_hip_has_6m_registration_1": True,
             "candidate_hip_is_eligible_index_1": False,
 
             "candidate_hip_date_2": date(2025, 6, 1),
             "candidate_hip_passes_6m_rule_2": True,
             "candidate_hip_age_2": 18,
             "candidate_hip_age_eligible_2": True,
-            "candidate_hip_has_3m_registration_2": True,
+            "candidate_hip_has_6m_registration_2": True,
             "candidate_hip_is_eligible_index_2": True,
 
-            "has_more_than_10_candidate_hip_dates": False,
+            "has_more_than_15_candidate_hip_dates": False,
         },
     },
         
-    # The patient has less than three months' registration at the first
+    # The patient has less than six months' registration at the first
     # candidate date but sufficient registration at the second candidate date.
     11: {
         "patients": {
@@ -505,21 +530,21 @@ test_data = {
             "candidate_hip_date_1": date(2024, 5, 1),
             "candidate_hip_passes_6m_rule_1": True,
             "candidate_hip_age_eligible_1": True,
-            "candidate_hip_has_3m_registration_1": False,
+            "candidate_hip_has_6m_registration_1": False,
             "candidate_hip_is_eligible_index_1": False,
 
             "candidate_hip_date_2": date(2024, 12, 1),
             "candidate_hip_prior_hospital_count_6m_2": 0,
             "candidate_hip_passes_6m_rule_2": True,
             "candidate_hip_age_eligible_2": True,
-            "candidate_hip_has_3m_registration_2": True,
+            "candidate_hip_has_6m_registration_2": True,
             "candidate_hip_is_eligible_index_2": True,
 
-            "has_more_than_10_candidate_hip_dates": False,
+            "has_more_than_15_candidate_hip_dates": False,
         },
     },
 
-    # A patient who is exactly 18 and has exactly three months of continuous
+    # A patient who is exactly 18 and has exactly six months of continuous
     # registration on the candidate date meets both eligibility criteria.
     12: {
         "patients": {
@@ -527,7 +552,7 @@ test_data = {
         },
         "practice_registrations": [
             {
-                "start_date": date(2024, 3, 1),
+                "start_date": date(2023, 12, 1),
                 "end_date": None,
                 "practice_pseudo_id": 100,
             },
@@ -546,9 +571,9 @@ test_data = {
             "candidate_hip_passes_6m_rule_1": True,
             "candidate_hip_age_1": 18,
             "candidate_hip_age_eligible_1": True,
-            "candidate_hip_has_3m_registration_1": True,
+            "candidate_hip_has_6m_registration_1": True,
             "candidate_hip_is_eligible_index_1": True,
-            "has_more_than_10_candidate_hip_dates": False,
+            "has_more_than_15_candidate_hip_dates": False,
         },
     },
 }

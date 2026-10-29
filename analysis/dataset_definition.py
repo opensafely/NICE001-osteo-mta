@@ -69,7 +69,7 @@ hip_gp_events = clinical_events.where(
 
 dataset.define_population(candidate_hip_admissions.exists_for_patient())
 
-MAX_CANDIDATE_DATES = 10
+MAX_CANDIDATE_DATES = 15
 
 remaining_candidate_hip_admissions = candidate_hip_admissions
 
@@ -113,11 +113,11 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
         & (age_at_candidate_date >= 18)
     )
 
-    has_3m_registration = (
+    has_6m_registration = (
         candidate_date.is_not_null()
         & practice_registrations
         .spanning(
-            candidate_date - months(3),
+            candidate_date - months(6),
             candidate_date,
         )
         .exists_for_patient()
@@ -126,7 +126,7 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
     is_eligible_index = (
         passes_6m_rule
         & age_eligible
-        & has_3m_registration
+        & has_6m_registration
     )
 
     dataset.add_column(
@@ -165,8 +165,8 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
     )
 
     dataset.add_column(
-        f"candidate_hip_has_3m_registration_{candidate_number}",
-        has_3m_registration,
+        f"candidate_hip_has_6m_registration_{candidate_number}",
+        has_6m_registration,
     )
 
     dataset.add_column(
