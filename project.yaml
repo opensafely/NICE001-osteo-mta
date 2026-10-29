@@ -43,6 +43,27 @@ actions:
     outputs:
       highly_sensitive:
         consistency_summary: output/hip_wide_long_consistency.txt
+  generate_wrist_candidates:
+    run: ehrql:v1 generate-dataset analysis/dataset_definition_wrist.py --test-data-file analysis/test_dataset_definition_wrist.py --output output/wrist_candidates.csv.gz
+    outputs:
+      highly_sensitive:
+        wrist_candidates: output/wrist_candidates.csv.gz
+
+  select_wrist_index_event:
+    run: python:v2 python analysis/select_wrist_index_event.py
+    needs: [generate_wrist_candidates]
+    outputs:
+      highly_sensitive:
+        selected_cases: output/selected_wrist_index_cases.csv
+        selection_qa: output/selected_wrist_index_cases_qa.csv
+  check_wrist_index_selection:
+    run: python:v2 python analysis/check_wrist_index_selection.py
+    needs:
+      - generate_wrist_candidates
+      - select_wrist_index_event
+    outputs:
+      highly_sensitive:
+        selection_check: output/wrist_index_selection_check.txt
   generate_wrist_event_level:
     run: ehrql:v1 generate-dataset analysis/dataset_definition_wrist_event_level.py --dummy-tables analysis/dummy_tables/wrist_event_level --output output/wrist_event_level_qa/:csv
     outputs:
