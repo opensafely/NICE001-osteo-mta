@@ -2,7 +2,7 @@ version: '5.0'
 
 actions:
   generate_dataset:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition.py --output output/dataset.csv.gz
+    run: ehrql:v1 generate-dataset analysis/dataset_definition.py --test-data-file analysis/test_dataset_definition.py --output output/dataset.csv.gz
     outputs:
       highly_sensitive:
         dataset: output/dataset.csv.gz
@@ -14,6 +14,7 @@ actions:
       highly_sensitive:
         selected_cases: output/selected_hip_index_cases.csv
         selection_qa: output/selected_hip_index_cases_qa.csv
+
   check_hip_index_selection:
     run: python:v2 python analysis/check_hip_index_selection.py
     needs:
@@ -22,27 +23,7 @@ actions:
     outputs:
       highly_sensitive:
         selection_check: output/hip_index_selection_check.txt
-  generate_hip_event_level:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_event_level.py --test-data-file analysis/test_dataset_definition.py --output output/hip_event_level_pipeline/:csv
-    outputs:
-      highly_sensitive:
-        event_level_files: output/hip_event_level_pipeline/*.csv
 
-  build_hip_event_cohort:
-    run: python:v2 python analysis/build_hip_event_cohort.py
-    needs: [generate_hip_event_level]
-    outputs:
-      highly_sensitive:
-        hip_candidate_events: output/hip_candidate_events_long.csv
-
-  check_hip_wide_long_consistency:
-    run: python:v2 python analysis/check_hip_wide_long_consistency.py
-    needs:
-      - generate_hip_event_level
-      - build_hip_event_cohort
-    outputs:
-      highly_sensitive:
-        consistency_summary: output/hip_wide_long_consistency.txt
   generate_wrist_candidates:
     run: ehrql:v1 generate-dataset analysis/dataset_definition_wrist.py --test-data-file analysis/test_dataset_definition_wrist.py --output output/wrist_candidates.csv.gz
     outputs:
@@ -56,6 +37,7 @@ actions:
       highly_sensitive:
         selected_cases: output/selected_wrist_index_cases.csv
         selection_qa: output/selected_wrist_index_cases_qa.csv
+
   check_wrist_index_selection:
     run: python:v2 python analysis/check_wrist_index_selection.py
     needs:
@@ -64,25 +46,7 @@ actions:
     outputs:
       highly_sensitive:
         selection_check: output/wrist_index_selection_check.txt
-  generate_wrist_event_level:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_wrist_event_level.py --dummy-tables analysis/dummy_tables/wrist_event_level --output output/wrist_event_level_qa/:csv
-    outputs:
-      highly_sensitive:
-        event_level_files: output/wrist_event_level_qa/*.csv
 
-  build_wrist_event_cohort:
-    run: python:v2 python analysis/build_wrist_event_cohort.py
-    needs: [generate_wrist_event_level]
-    outputs:
-      highly_sensitive:
-        wrist_candidate_events: output/wrist_candidate_events_long.csv
-
-  check_wrist_event_cohort:
-    run: python:v2 python analysis/check_wrist_event_cohort.py
-    needs: [build_wrist_event_cohort]
-    outputs:
-      highly_sensitive:
-        wrist_event_cohort_check: output/wrist_event_cohort_check.txt
   generate_vertebral_candidates:
     run: ehrql:v1 generate-dataset analysis/dataset_definition_vertebral.py --test-data-file analysis/test_dataset_definition_vertebral.py --output output/vertebral_candidates.csv.gz
     outputs:
@@ -105,25 +69,7 @@ actions:
     outputs:
       highly_sensitive:
         selection_check: output/vertebral_index_selection_check.txt
-  generate_vertebral_event_level:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_vertebral_event_level.py --dummy-tables analysis/dummy_tables/vertebral_event_level --output output/vertebral_event_level_qa/:csv
-    outputs:
-      highly_sensitive:
-        event_level_files: output/vertebral_event_level_qa/*.csv
 
-  build_vertebral_event_cohort:
-    run: python:v2 python analysis/build_vertebral_event_cohort.py
-    needs: [generate_vertebral_event_level]
-    outputs:
-      highly_sensitive:
-        vertebral_candidate_events: output/vertebral_candidate_events_long.csv
-
-  check_vertebral_event_cohort:
-    run: python:v2 python analysis/check_vertebral_event_cohort.py
-    needs: [build_vertebral_event_cohort]
-    outputs:
-      highly_sensitive:
-        vertebral_event_cohort_check: output/vertebral_event_cohort_check.txt
   generate_prox_humerus_candidates:
     run: ehrql:v1 generate-dataset analysis/dataset_definition_prox_humerus.py --test-data-file analysis/test_dataset_definition_prox_humerus.py --output output/prox_humerus_candidates.csv.gz
     outputs:
@@ -146,22 +92,3 @@ actions:
     outputs:
       highly_sensitive:
         selection_check: output/prox_humerus_index_selection_check.txt
-  generate_prox_humerus_event_level:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_prox_humerus_event_level.py --dummy-tables analysis/dummy_tables/prox_humerus_event_level --output output/prox_humerus_event_level_qa/:csv
-    outputs:
-      highly_sensitive:
-        event_level_files: output/prox_humerus_event_level_qa/*.csv
-
-  build_prox_humerus_event_cohort:
-    run: python:v2 python analysis/build_prox_humerus_event_cohort.py
-    needs: [generate_prox_humerus_event_level]
-    outputs:
-      highly_sensitive:
-        prox_humerus_candidate_events: output/prox_humerus_candidate_events_long.csv
-
-  check_prox_humerus_event_cohort:
-    run: python:v2 python analysis/check_prox_humerus_event_cohort.py
-    needs: [build_prox_humerus_event_cohort]
-    outputs:
-      highly_sensitive:
-        prox_humerus_event_cohort_check: output/prox_humerus_event_cohort_check.txt
