@@ -24,6 +24,13 @@ actions:
       highly_sensitive:
         selection_check: output/hip_index_selection_check.txt
 
+  prepare_hip_selection_qa:
+    run: python:v2 python analysis/prepare_hip_selection_qa.py
+    needs: [select_hip_index_event]
+    outputs:
+      moderately_sensitive:
+        selection_qa: output/selected_hip_index_cases_qa_sdc.csv
+
   generate_wrist_candidates:
     run: ehrql:v1 generate-dataset analysis/dataset_definition_wrist.py --test-data-file analysis/test_dataset_definition_wrist.py --output output/wrist_candidates.csv.gz
     outputs:
