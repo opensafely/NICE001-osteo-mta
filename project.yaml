@@ -25,8 +25,10 @@ actions:
         selection_check: output/hip_index_selection_check.txt
 
   prepare_hip_selection_qa:
-    run: python:v2 python analysis/prepare_hip_selection_qa.py
-    needs: [select_hip_index_event]
+    run: python:v2 python analysis/prepare_selection_qa.py hip
+    needs:
+      - select_hip_index_event
+      - check_hip_index_selection
     outputs:
       moderately_sensitive:
         selection_qa: output/selected_hip_index_cases_qa_sdc.csv
@@ -54,6 +56,15 @@ actions:
       highly_sensitive:
         selection_check: output/wrist_index_selection_check.txt
 
+  prepare_wrist_selection_qa:
+    run: python:v2 python analysis/prepare_selection_qa.py wrist
+    needs:
+      - select_wrist_index_event
+      - check_wrist_index_selection
+    outputs:
+      moderately_sensitive:
+        selection_qa: output/selected_wrist_index_cases_qa_sdc.csv
+
   generate_vertebral_candidates:
     run: ehrql:v1 generate-dataset analysis/dataset_definition_vertebral.py --test-data-file analysis/test_dataset_definition_vertebral.py --output output/vertebral_candidates.csv.gz
     outputs:
@@ -77,6 +88,15 @@ actions:
       highly_sensitive:
         selection_check: output/vertebral_index_selection_check.txt
 
+  prepare_vertebral_selection_qa:
+    run: python:v2 python analysis/prepare_selection_qa.py vertebral
+    needs:
+      - select_vertebral_index_event
+      - check_vertebral_index_selection
+    outputs:
+      moderately_sensitive:
+        selection_qa: output/selected_vertebral_index_cases_qa_sdc.csv
+
   generate_prox_humerus_candidates:
     run: ehrql:v1 generate-dataset analysis/dataset_definition_prox_humerus.py --test-data-file analysis/test_dataset_definition_prox_humerus.py --output output/prox_humerus_candidates.csv.gz
     outputs:
@@ -99,3 +119,12 @@ actions:
     outputs:
       highly_sensitive:
         selection_check: output/prox_humerus_index_selection_check.txt
+
+  prepare_prox_humerus_selection_qa:
+    run: python:v2 python analysis/prepare_selection_qa.py prox_humerus
+    needs:
+      - select_prox_humerus_index_event
+      - check_prox_humerus_index_selection
+    outputs:
+      moderately_sensitive:
+        selection_qa: output/selected_prox_humerus_index_cases_qa_sdc.csv

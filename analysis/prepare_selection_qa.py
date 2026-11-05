@@ -1,10 +1,32 @@
+import argparse
 from pathlib import Path
 
 import pandas as pd
 
 
-INPUT_FILE = Path("output/selected_hip_index_cases_qa.csv")
-OUTPUT_FILE = Path("output/selected_hip_index_cases_qa_sdc.csv")
+VALID_FRACTURE_TYPES = [
+    "hip",
+    "wrist",
+    "vertebral",
+    "prox_humerus",
+]
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "fracture_type",
+    choices=VALID_FRACTURE_TYPES,
+)
+args = parser.parse_args()
+
+fracture_type = args.fracture_type
+
+input_file = Path(
+    f"output/selected_{fracture_type}_index_cases_qa.csv"
+)
+output_file = Path(
+    f"output/selected_{fracture_type}_index_cases_qa_sdc.csv"
+)
 
 
 def disclosure_control(value):
@@ -16,15 +38,14 @@ def disclosure_control(value):
     if value <= 7:
         return "[REDACTED]"
 
-    # Round counts above 7 to the nearest 5.
     return str(5 * ((value + 2) // 5))
 
 
-qa = pd.read_csv(INPUT_FILE)
+qa = pd.read_csv(input_file)
 
 qa["value"] = qa["value"].apply(disclosure_control)
 qa["disclosure_control"] = (
     "Counts <=7 redacted; remaining counts rounded to nearest 5"
 )
 
-qa.to_csv(OUTPUT_FILE, index=False)
+qa.to_csv(output_file, index=False)
