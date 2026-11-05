@@ -2,7 +2,12 @@ version: '5.0'
 
 actions:
   generate_dataset:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition.py --test-data-file analysis/test_dataset_definition.py --output output/dataset.csv.gz
+    run: >
+      ehrql:v1 generate-dataset
+      analysis/dataset_definition.py
+      --test-data-file analysis/test_dataset_definition.py
+      --dummy-tables analysis/dummy_tables_hip_2024
+      --output output/dataset.csv.gz
     outputs:
       highly_sensitive:
         dataset: output/dataset.csv.gz
@@ -128,3 +133,58 @@ actions:
     outputs:
       moderately_sensitive:
         selection_qa: output/selected_prox_humerus_index_cases_qa_sdc.csv
+
+  generate_hip_matching_attributes_2024:
+    run: >
+      ehrql:v1 generate-dataset
+      analysis/dataset_definition_hip_matching_2024.py
+      --test-data-file
+      analysis/test_dataset_definition_hip_matching_2024.py
+      --dummy-tables
+      analysis/dummy_tables_hip_2024
+      --output output/hip_matching_attributes_2024.csv.gz
+    outputs:
+      highly_sensitive:
+        attributes: output/hip_matching_attributes_2024.csv.gz
+
+  prepare_hip_matching_inputs_2024:
+    run: >
+      python:v2 python
+      analysis/prepare_hip_matching_inputs_2024.py
+    needs:
+      - select_hip_index_event
+      - generate_hip_matching_attributes_2024
+    outputs:
+      highly_sensitive:
+        cases: output/hip_cases_2024_matching.csv.gz
+        controls: output/hip_potential_controls_2024_matching.csv.gz
+        qa: output/hip_matching_inputs_2024_qa.csv
+
+  match_hip_2024:
+    run: >
+      matching:v1.2.6
+      --cases output/hip_cases_2024_matching.csv.gz
+      --controls output/hip_potential_controls_2024_matching.csv.gz
+    needs:
+      - prepare_hip_matching_inputs_2024
+    config:
+      matches_per_case: 4
+      min_matches_per_case: 1
+      match_variables:
+        sex: category
+        age: 3
+        practice: category
+        care_home: category
+      closest_match_variables:
+        - age
+      index_date_variable: index_date
+      generate_match_index_date: no_offset
+      drop_cases_from_matches: true
+      output_suffix: _hip_2024
+    outputs:
+      highly_sensitive:
+        matched_cases: output/matched_cases_hip_2024.arrow
+        matched_controls: output/matched_matches_hip_2024.arrow
+        matched_combined: output/matched_combined_hip_2024.arrow
+      moderately_sensitive:
+        report: output/matching_report_hip_2024.txt
