@@ -50,10 +50,10 @@ def matching_patient(
     if expected_in_population:
         record["expected_columns"] = {
             "age": (
-                date(2024, 7, 1).year
+                date(2024, 1, 1).year
                 - date_of_birth.year
                 - (
-                    (7, 1)
+                    (1, 1)
                     < (date_of_birth.month, date_of_birth.day)
                 )
             ),
@@ -62,8 +62,14 @@ def matching_patient(
             "care_home": (
                 "care_home" if care_home else "not_care_home"
             ),
+            "has_6m_registration_at_anchor": (
+                registration_start <= date(2023, 7, 1)
+            ),
             "no_hip_fracture_6m_anchor": (
                 hip_fracture_date is None
+                or not date(2023, 7, 1)
+                <= hip_fracture_date
+                <= date(2024, 1, 1)
             ),
         }
 
@@ -71,8 +77,8 @@ def matching_patient(
 
 
 test_data = {
-    # Selected 2024 hip case. It is not eligible at the annual anchor
-    # because registration began less than six months before 1 July.
+    # Selected 2024 hip case. It is absent from the 1 January snapshot
+    # because registration begins in March 2024.
     11: matching_patient(
         patient_id=11,
         date_of_birth=date(1980, 1, 1),
@@ -82,7 +88,8 @@ test_data = {
         expected_in_population=False,
     ),
 
-    # Selected 2024 hip case with complete annual-anchor attributes.
+    # Selected 2024 hip case. It is 17 at the annual anchor but 18 at
+    # its exact June index date, so the broad snapshot must include it.
     12: matching_patient(
         patient_id=12,
         date_of_birth=date(2006, 6, 1),
@@ -91,7 +98,7 @@ test_data = {
         hip_fracture_date=date(2024, 6, 1),
     ),
 
-    # Four eligible matches for patient 12: male, same practice,
+    # Four clean matches for patient 12: male, same practice,
     # same care-home status and within three years of age.
     201: matching_patient(
         201, date(2006, 1, 1), "male"
@@ -132,7 +139,8 @@ test_data = {
         care_home=True,
     ),
 
-    # Otherwise suitable, but has a hip fracture in the anchor window.
+    # Otherwise suitable at the January snapshot, but has a hip fracture
+    # before a June case date. The post-match exact-date check will remove it.
     209: matching_patient(
         209,
         date(2006, 1, 1),

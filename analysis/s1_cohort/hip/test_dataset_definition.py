@@ -549,12 +549,21 @@ test_data = {
     12: {
         "patients": {
             "date_of_birth": date(2006, 6, 1),
+            "sex": "male",
         },
         "practice_registrations": [
             {
                 "start_date": date(2023, 12, 1),
                 "end_date": None,
                 "practice_pseudo_id": 100,
+            },
+        ],
+        "addresses": [
+            {
+                "address_id": 12,
+                "start_date": date(2023, 1, 1),
+                "end_date": None,
+                "care_home_is_potential_match": False,
             },
         ],
         "apcs": [
@@ -570,6 +579,9 @@ test_data = {
             "candidate_hip_date_1": date(2024, 6, 1),
             "candidate_hip_passes_6m_rule_1": True,
             "candidate_hip_age_1": 18,
+            "sex": "male",
+            "candidate_hip_practice_1": 100,
+            "candidate_hip_care_home_1": "not_care_home",
             "candidate_hip_age_eligible_1": True,
             "candidate_hip_has_6m_registration_1": True,
             "candidate_hip_is_eligible_index_1": True,
@@ -577,3 +589,9 @@ test_data = {
         },
     },
 }
+
+# ehrQL assurance requires every patient to provide every referenced table.
+# Most existing hip scenarios do not need an address record, so supply an
+# empty address table unless the scenario defines one explicitly.
+for patient in test_data.values():
+    patient.setdefault("addresses", [])

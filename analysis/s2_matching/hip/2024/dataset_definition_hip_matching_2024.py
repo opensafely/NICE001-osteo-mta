@@ -8,8 +8,8 @@ from ehrql.tables.tpp import (
 )
 
 
-ANCHOR_DATE = "2024-07-01"
-FRACTURE_WINDOW_START = "2024-01-01"
+ANCHOR_DATE = "2024-01-01"
+FRACTURE_WINDOW_START = "2023-07-01"
 
 dataset = create_dataset()
 
@@ -69,17 +69,21 @@ care_home_status_at_anchor = case(
 
 dataset.define_population(
     patients.exists_for_patient()
-    & (age_at_anchor >= 18)
+    # Include patients who may turn 18 during 2024. Exact age is checked
+    # later using the inherited case index date.
+    & (age_at_anchor >= 17)
     & patients.sex.is_not_null()
     & registration_at_anchor.exists_for_patient()
     & address_at_anchor.exists_for_patient()
-    & has_6m_registration_at_anchor
 )
 
 dataset.age = age_at_anchor
 dataset.sex = patients.sex
 dataset.practice = registration_at_anchor.practice_pseudo_id
 dataset.care_home = care_home_status_at_anchor
+dataset.has_6m_registration_at_anchor = (
+    has_6m_registration_at_anchor
+)
 dataset.no_hip_fracture_6m_anchor = (
     ~has_hip_fracture_in_anchor_window
 )

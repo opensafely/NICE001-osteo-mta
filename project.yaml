@@ -188,3 +188,50 @@ actions:
         matched_combined: output/matched_combined_hip_2024.arrow
       moderately_sensitive:
         report: output/matching_report_hip_2024.txt
+
+  prepare_hip_matched_controls_for_ehrql_2024:
+    run: >
+      python:v2 python
+      analysis/s2_matching/hip/2024/prepare_hip_matched_controls_for_ehrql_2024.py
+    needs:
+      - match_hip_2024
+    outputs:
+      highly_sensitive:
+        controls: output/hip_matched_controls_for_ehrql_2024.csv.gz
+
+  generate_hip_matched_control_attributes_2024:
+    run: >
+      ehrql:v1 generate-dataset
+      analysis/s2_matching/hip/2024/dataset_definition_hip_matched_controls_2024.py
+      --dummy-tables
+      analysis/s2_matching/hip/2024/dummy_tables_hip_2024
+      --output output/hip_matched_control_attributes_2024.csv.gz
+    needs:
+      - prepare_hip_matched_controls_for_ehrql_2024
+    outputs:
+      highly_sensitive:
+        attributes: output/hip_matched_control_attributes_2024.csv.gz
+
+  finalise_hip_matches_2024:
+    run: >
+      python:v2 python
+      analysis/s2_matching/hip/2024/finalise_hip_matches_2024.py
+    needs:
+      - match_hip_2024
+      - generate_hip_matched_control_attributes_2024
+    outputs:
+      highly_sensitive:
+        matched_cases: output/final_matched_cases_hip_2024.arrow
+        matched_controls: output/final_matched_controls_hip_2024.arrow
+        matched_combined: output/final_matched_combined_hip_2024.arrow
+        qa: output/final_hip_matching_2024_qa.csv
+
+  prepare_hip_matching_qa_2024:
+    run: >
+      python:v2 python
+      analysis/s2_matching/hip/2024/prepare_hip_matching_qa_2024.py
+    needs:
+      - finalise_hip_matches_2024
+    outputs:
+      moderately_sensitive:
+        qa: output/final_hip_matching_2024_qa_sdc.csv

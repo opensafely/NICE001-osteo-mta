@@ -49,24 +49,51 @@ cases_2024 = selected_cases.loc[
 
 cases_2024_patient_ids = set(cases_2024["patient_id"])
 
-cases = cases_2024.merge(
-    attributes[
-        [
-            "patient_id",
-            "age",
-            "sex",
-            "practice",
-            "care_home",
-        ]
-    ],
-    on="patient_id",
-    how="inner",
-    validate="one_to_one",
-)
-
-controls = attributes.loc[
-    as_boolean(attributes["no_hip_fracture_6m_anchor"])
+cases = cases_2024.rename(
+    columns={
+        "age_at_index": "age",
+        "practice_at_index": "practice",
+        "care_home_at_index": "care_home",
+    }
+)[
+    [
+        "patient_id",
+        "index_date",
+        "fracture_type",
+        "age",
+        "sex",
+        "practice",
+        "care_home",
+    ]
 ].copy()
+
+cases["age"] = pd.to_numeric(
+    cases["age"],
+    errors="coerce",
+).astype("Int64")
+cases["practice"] = pd.to_numeric(
+    cases["practice"],
+    errors="coerce",
+).astype("Int64")
+
+complete_case_attributes = cases[
+    ["age", "sex", "practice", "care_home"]
+].notna().all(axis=1)
+
+cases = cases.loc[complete_case_attributes].copy()
+
+# Keep the January pool broad. Registration and fracture eligibility are
+# checked after controls inherit their matched case's exact index date.
+controls = attributes.copy()
+
+controls["age"] = pd.to_numeric(
+    controls["age"],
+    errors="coerce",
+).astype("Int64")
+controls["practice"] = pd.to_numeric(
+    controls["practice"],
+    errors="coerce",
+).astype("Int64")
 
 controls = controls.loc[
     ~controls["patient_id"].isin(cases_2024_patient_ids)
@@ -103,15 +130,23 @@ qa = pd.DataFrame(
     {
         "metric": [
             "selected_hip_cases_in_2024",
-            "cases_with_complete_anchor_attributes",
-            "cases_missing_anchor_attributes",
-            "potential_controls_at_anchor",
+            "cases_with_complete_index_attributes",
+            "cases_missing_index_attributes",
+            "potential_controls_at_january_anchor",
+            "potential_controls_with_6m_registration_at_anchor",
+            "potential_controls_without_hip_fracture_6m_anchor",
         ],
         "value": [
             len(cases_2024),
             len(cases),
             len(cases_2024) - len(cases),
             len(controls),
+            as_boolean(
+                controls["has_6m_registration_at_anchor"]
+            ).sum(),
+            as_boolean(
+                controls["no_hip_fracture_6m_anchor"]
+            ).sum(),
         ],
     }
 )
