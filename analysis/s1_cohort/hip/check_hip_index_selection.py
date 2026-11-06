@@ -38,13 +38,22 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
         f"candidate_hip_is_eligible_index_{candidate_number}"
     )
     age_column = f"candidate_hip_age_{candidate_number}"
+    practice_column = (
+        f"candidate_hip_practice_{candidate_number}"
+    )
+    care_home_column = (
+        f"candidate_hip_care_home_{candidate_number}"
+    )
 
     candidate = patients[
         [
             "patient_id",
+            "sex",
             date_column,
             eligibility_column,
             age_column,
+            practice_column,
+            care_home_column,
         ]
     ].copy()
 
@@ -53,6 +62,8 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
             date_column: "index_date",
             eligibility_column: "is_eligible_index",
             age_column: "age_at_index",
+            practice_column: "practice_at_index",
+            care_home_column: "care_home_at_index",
         }
     )
 
@@ -159,6 +170,9 @@ comparison_columns = [
     "candidate_number",
     "number_of_eligible_hip_index_events",
     "age_at_index",
+    "sex",
+    "practice_at_index",
+    "care_home_at_index",
 ]
 
 assert actual["patient_id"].is_unique
@@ -173,6 +187,16 @@ actual["age_at_index"] = pd.to_numeric(
 
 expected["age_at_index"] = pd.to_numeric(
     expected["age_at_index"],
+    errors="coerce",
+).astype("Int64")
+
+actual["practice_at_index"] = pd.to_numeric(
+    actual["practice_at_index"],
+    errors="coerce",
+).astype("Int64")
+
+expected["practice_at_index"] = pd.to_numeric(
+    expected["practice_at_index"],
     errors="coerce",
 ).astype("Int64")
 

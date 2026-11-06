@@ -1,9 +1,10 @@
 # Temporary QA dataset for reconstructing and testing hip-fracture
 # candidate dates. This is not the final eligible analysis cohort.
 
-from ehrql import create_dataset, codelist_from_csv, months
+from ehrql import case, create_dataset, codelist_from_csv, months, when
 
 from ehrql.tables.tpp import (
+    addresses,
     apcs,
     clinical_events,
     patients,
@@ -69,6 +70,8 @@ hip_gp_events = clinical_events.where(
 
 dataset.define_population(candidate_hip_admissions.exists_for_patient())
 
+dataset.sex = patients.sex
+
 MAX_CANDIDATE_DATES = 15
 
 remaining_candidate_hip_admissions = candidate_hip_admissions
@@ -81,6 +84,24 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
     )
 
     candidate_date = candidate_admission.admission_date
+
+    registration_at_candidate_date = (
+        practice_registrations.for_patient_on(candidate_date)
+    )
+
+    address_at_candidate_date = addresses.for_patient_on(
+        candidate_date
+    )
+
+    care_home_status_at_candidate_date = case(
+        when(
+            address_at_candidate_date.exists_for_patient()
+            & address_at_candidate_date.care_home_is_potential_match
+        ).then("care_home"),
+        when(
+            address_at_candidate_date.exists_for_patient()
+        ).then("not_care_home"),
+    )
     
     prior_hip_admissions_6m_for_candidate = hip_admissions.where(
         apcs.admission_date.is_on_or_after(
@@ -157,6 +178,16 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
     dataset.add_column(
         f"candidate_hip_age_{candidate_number}",
         age_at_candidate_date,
+    )
+
+    dataset.add_column(
+        f"candidate_hip_practice_{candidate_number}",
+        registration_at_candidate_date.practice_pseudo_id,
+    )
+
+    dataset.add_column(
+        f"candidate_hip_care_home_{candidate_number}",
+        care_home_status_at_candidate_date,
     )
 
     dataset.add_column(

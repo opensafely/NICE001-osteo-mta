@@ -2,13 +2,18 @@ version: '5.0'
 
 actions:
   generate_dataset:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition.py --test-data-file analysis/test_dataset_definition.py --output output/dataset.csv.gz
+    run: >
+      ehrql:v1 generate-dataset
+      analysis/s1_cohort/hip/dataset_definition.py
+      --test-data-file analysis/s1_cohort/hip/test_dataset_definition.py
+      --dummy-tables analysis/s2_matching/hip/2024/dummy_tables_hip_2024
+      --output output/dataset.csv.gz
     outputs:
       highly_sensitive:
         dataset: output/dataset.csv.gz
 
   select_hip_index_event:
-    run: python:v2 python analysis/select_hip_index_event.py
+    run: python:v2 python analysis/s1_cohort/hip/select_hip_index_event.py
     needs: [generate_dataset]
     outputs:
       highly_sensitive:
@@ -16,7 +21,7 @@ actions:
         selection_qa: output/selected_hip_index_cases_qa.csv
 
   check_hip_index_selection:
-    run: python:v2 python analysis/check_hip_index_selection.py
+    run: python:v2 python analysis/s1_cohort/hip/check_hip_index_selection.py
     needs:
       - generate_dataset
       - select_hip_index_event
@@ -25,7 +30,7 @@ actions:
         selection_check: output/hip_index_selection_check.txt
 
   prepare_hip_selection_qa:
-    run: python:v2 python analysis/prepare_selection_qa.py hip
+    run: python:v2 python analysis/s1_cohort/shared/prepare_selection_qa.py hip
     needs:
       - select_hip_index_event
       - check_hip_index_selection
@@ -34,13 +39,13 @@ actions:
         selection_qa: output/selected_hip_index_cases_qa_sdc.csv
 
   generate_wrist_candidates:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_wrist.py --test-data-file analysis/test_dataset_definition_wrist.py --output output/wrist_candidates.csv.gz
+    run: ehrql:v1 generate-dataset analysis/s1_cohort/wrist/dataset_definition_wrist.py --test-data-file analysis/s1_cohort/wrist/test_dataset_definition_wrist.py --output output/wrist_candidates.csv.gz
     outputs:
       highly_sensitive:
         wrist_candidates: output/wrist_candidates.csv.gz
 
   select_wrist_index_event:
-    run: python:v2 python analysis/select_wrist_index_event.py
+    run: python:v2 python analysis/s1_cohort/wrist/select_wrist_index_event.py
     needs: [generate_wrist_candidates]
     outputs:
       highly_sensitive:
@@ -48,7 +53,7 @@ actions:
         selection_qa: output/selected_wrist_index_cases_qa.csv
 
   check_wrist_index_selection:
-    run: python:v2 python analysis/check_wrist_index_selection.py
+    run: python:v2 python analysis/s1_cohort/wrist/check_wrist_index_selection.py
     needs:
       - generate_wrist_candidates
       - select_wrist_index_event
@@ -57,7 +62,7 @@ actions:
         selection_check: output/wrist_index_selection_check.txt
 
   prepare_wrist_selection_qa:
-    run: python:v2 python analysis/prepare_selection_qa.py wrist
+    run: python:v2 python analysis/s1_cohort/shared/prepare_selection_qa.py wrist
     needs:
       - select_wrist_index_event
       - check_wrist_index_selection
@@ -66,13 +71,13 @@ actions:
         selection_qa: output/selected_wrist_index_cases_qa_sdc.csv
 
   generate_vertebral_candidates:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_vertebral.py --test-data-file analysis/test_dataset_definition_vertebral.py --output output/vertebral_candidates.csv.gz
+    run: ehrql:v1 generate-dataset analysis/s1_cohort/vertebral/dataset_definition_vertebral.py --test-data-file analysis/s1_cohort/vertebral/test_dataset_definition_vertebral.py --output output/vertebral_candidates.csv.gz
     outputs:
       highly_sensitive:
         vertebral_candidates: output/vertebral_candidates.csv.gz
 
   select_vertebral_index_event:
-    run: python:v2 python analysis/select_vertebral_index_event.py
+    run: python:v2 python analysis/s1_cohort/vertebral/select_vertebral_index_event.py
     needs: [generate_vertebral_candidates]
     outputs:
       highly_sensitive:
@@ -80,7 +85,7 @@ actions:
         selection_qa: output/selected_vertebral_index_cases_qa.csv
 
   check_vertebral_index_selection:
-    run: python:v2 python analysis/check_vertebral_index_selection.py
+    run: python:v2 python analysis/s1_cohort/vertebral/check_vertebral_index_selection.py
     needs:
       - generate_vertebral_candidates
       - select_vertebral_index_event
@@ -89,7 +94,7 @@ actions:
         selection_check: output/vertebral_index_selection_check.txt
 
   prepare_vertebral_selection_qa:
-    run: python:v2 python analysis/prepare_selection_qa.py vertebral
+    run: python:v2 python analysis/s1_cohort/shared/prepare_selection_qa.py vertebral
     needs:
       - select_vertebral_index_event
       - check_vertebral_index_selection
@@ -98,13 +103,13 @@ actions:
         selection_qa: output/selected_vertebral_index_cases_qa_sdc.csv
 
   generate_prox_humerus_candidates:
-    run: ehrql:v1 generate-dataset analysis/dataset_definition_prox_humerus.py --test-data-file analysis/test_dataset_definition_prox_humerus.py --output output/prox_humerus_candidates.csv.gz
+    run: ehrql:v1 generate-dataset analysis/s1_cohort/prox_humerus/dataset_definition_prox_humerus.py --test-data-file analysis/s1_cohort/prox_humerus/test_dataset_definition_prox_humerus.py --output output/prox_humerus_candidates.csv.gz
     outputs:
       highly_sensitive:
         prox_humerus_candidates: output/prox_humerus_candidates.csv.gz
 
   select_prox_humerus_index_event:
-    run: python:v2 python analysis/select_prox_humerus_index_event.py
+    run: python:v2 python analysis/s1_cohort/prox_humerus/select_prox_humerus_index_event.py
     needs: [generate_prox_humerus_candidates]
     outputs:
       highly_sensitive:
@@ -112,7 +117,7 @@ actions:
         selection_qa: output/selected_prox_humerus_index_cases_qa.csv
 
   check_prox_humerus_index_selection:
-    run: python:v2 python analysis/check_prox_humerus_index_selection.py
+    run: python:v2 python analysis/s1_cohort/prox_humerus/check_prox_humerus_index_selection.py
     needs:
       - generate_prox_humerus_candidates
       - select_prox_humerus_index_event
@@ -121,10 +126,112 @@ actions:
         selection_check: output/prox_humerus_index_selection_check.txt
 
   prepare_prox_humerus_selection_qa:
-    run: python:v2 python analysis/prepare_selection_qa.py prox_humerus
+    run: python:v2 python analysis/s1_cohort/shared/prepare_selection_qa.py prox_humerus
     needs:
       - select_prox_humerus_index_event
       - check_prox_humerus_index_selection
     outputs:
       moderately_sensitive:
         selection_qa: output/selected_prox_humerus_index_cases_qa_sdc.csv
+
+  generate_hip_matching_attributes_2024:
+    run: >
+      ehrql:v1 generate-dataset
+      analysis/s2_matching/hip/2024/dataset_definition_hip_matching_2024.py
+      --test-data-file
+      analysis/s2_matching/hip/2024/test_dataset_definition_hip_matching_2024.py
+      --dummy-tables
+      analysis/s2_matching/hip/2024/dummy_tables_hip_2024
+      --output output/hip_matching_attributes_2024.csv.gz
+    outputs:
+      highly_sensitive:
+        attributes: output/hip_matching_attributes_2024.csv.gz
+
+  prepare_hip_matching_inputs_2024:
+    run: >
+      python:v2 python
+      analysis/s2_matching/hip/2024/prepare_hip_matching_inputs_2024.py
+    needs:
+      - select_hip_index_event
+      - generate_hip_matching_attributes_2024
+    outputs:
+      highly_sensitive:
+        cases: output/hip_cases_2024_matching.csv.gz
+        controls: output/hip_potential_controls_2024_matching.csv.gz
+        qa: output/hip_matching_inputs_2024_qa.csv
+
+  match_hip_2024:
+    run: >
+      matching:v1.2.6
+      --cases output/hip_cases_2024_matching.csv.gz
+      --controls output/hip_potential_controls_2024_matching.csv.gz
+    needs:
+      - prepare_hip_matching_inputs_2024
+    config:
+      matches_per_case: 4
+      min_matches_per_case: 1
+      match_variables:
+        sex: category
+        age: 3
+        practice: category
+        care_home: category
+      closest_match_variables:
+        - age
+      index_date_variable: index_date
+      generate_match_index_date: no_offset
+      drop_cases_from_matches: true
+      output_suffix: _hip_2024
+    outputs:
+      highly_sensitive:
+        matched_cases: output/matched_cases_hip_2024.arrow
+        matched_controls: output/matched_matches_hip_2024.arrow
+        matched_combined: output/matched_combined_hip_2024.arrow
+      moderately_sensitive:
+        report: output/matching_report_hip_2024.txt
+
+  prepare_hip_matched_controls_for_ehrql_2024:
+    run: >
+      python:v2 python
+      analysis/s2_matching/hip/2024/prepare_hip_matched_controls_for_ehrql_2024.py
+    needs:
+      - match_hip_2024
+    outputs:
+      highly_sensitive:
+        controls: output/hip_matched_controls_for_ehrql_2024.csv.gz
+
+  generate_hip_matched_control_attributes_2024:
+    run: >
+      ehrql:v1 generate-dataset
+      analysis/s2_matching/hip/2024/dataset_definition_hip_matched_controls_2024.py
+      --dummy-tables
+      analysis/s2_matching/hip/2024/dummy_tables_hip_2024
+      --output output/hip_matched_control_attributes_2024.csv.gz
+    needs:
+      - prepare_hip_matched_controls_for_ehrql_2024
+    outputs:
+      highly_sensitive:
+        attributes: output/hip_matched_control_attributes_2024.csv.gz
+
+  finalise_hip_matches_2024:
+    run: >
+      python:v2 python
+      analysis/s2_matching/hip/2024/finalise_hip_matches_2024.py
+    needs:
+      - match_hip_2024
+      - generate_hip_matched_control_attributes_2024
+    outputs:
+      highly_sensitive:
+        matched_cases: output/final_matched_cases_hip_2024.arrow
+        matched_controls: output/final_matched_controls_hip_2024.arrow
+        matched_combined: output/final_matched_combined_hip_2024.arrow
+        qa: output/final_hip_matching_2024_qa.csv
+
+  prepare_hip_matching_qa_2024:
+    run: >
+      python:v2 python
+      analysis/s2_matching/hip/2024/prepare_hip_matching_qa_2024.py
+    needs:
+      - finalise_hip_matches_2024
+    outputs:
+      moderately_sensitive:
+        qa: output/final_hip_matching_2024_qa_sdc.csv
