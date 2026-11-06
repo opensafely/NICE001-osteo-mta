@@ -4,9 +4,11 @@
 
 **Repository:** `opensafely/NICE001-osteo-mta`
 
-**Integrated development branch:** `cohortbuild_md`
+**Implementation branch:** `matching_2024_hip`
 
-**Implementation history:** The 2024 hip pilot was developed on `matching_2024_hip` and merged into `cohortbuild_md` through PR #2 on 6 November 2026.
+**Target integration branch:** `cohortbuild_md`
+
+**Integration route:** PR #2 brings the matching pilot and staged analysis structure into `cohortbuild_md`. Real-data matching validation follows integration.
 
 **Status:** The 2024 hip workflow is locally validated with dummy data but has not yet been run against real TPP data.
 
@@ -66,7 +68,7 @@ The important distinction is:
 
 ## 4. Actions, scripts, inputs and outputs
 
-The actions below are defined in `project.yaml` on `cohortbuild_md`.
+The actions below are implemented in PR #2, targeting `cohortbuild_md`.
 
 | Order | Action                                         | Code                                                                            | Main inputs                                             | Main outputs                                                        | Purpose                                                                                            |
 | ----: | ---------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
@@ -261,15 +263,18 @@ They contain artificial representations of the TPP tables required by the datase
 
 ## 9. Real-data validation still required
 
-The matching code has been merged into `cohortbuild_md`, but the complete 2024 hip matching workflow has **not** yet been run against real TPP data.
+The complete 2024 hip matching workflow has **not** yet been run against real TPP data. The chosen route is to integrate the locally validated pilot into `cohortbuild_md` first and then use the existing Jobs workspace.
 
-The next developer should use the existing Jobs workspace attached to `cohortbuild_md`:
+The next developer should:
 
-1. Confirm that the merged matching actions are visible in the workspace.
-2. Submit `prepare_hip_matching_qa_2024`.
-3. Select **Force run dependencies** so that the revised hip cohort and all matching inputs are regenerated from real TPP data.
-4. Monitor the complete dependency chain on the Jobs site.
-5. Inspect `output/matching_report_hip_2024.txt` and `output/final_hip_matching_2024_qa_sdc.csv` in Airlock.
+1. Confirm that PR #2 has been merged and that `cohortbuild_md` contains the staged `analysis/s1_cohort/` and `analysis/s2_matching/` structure.
+2. Confirm that the matching actions are visible in the existing Jobs workspace attached to `cohortbuild_md`.
+3. Submit `prepare_hip_matching_qa_2024`.
+4. Select **Force run dependencies** so that the revised hip cohort and all matching inputs are regenerated from real TPP data.
+5. Monitor the complete dependency chain on the Jobs site.
+6. Inspect `output/matching_report_hip_2024.txt` and `output/final_hip_matching_2024_qa_sdc.csv` in Airlock.
+
+A temporary matching workspace is not required under this route. These are working process-QA outputs, so no release request is needed solely for this review.
 
 No temporary matching workspace is now required. These are working process-QA outputs, so no release request is needed solely for this review.
 
@@ -343,7 +348,7 @@ Do not copy the hip scripts unchanged. Before adding wrist, vertebral or proxima
 
 ## 12. Recommended pickup order
 
-1. Confirm that the merged matching actions are available from the `cohortbuild_md` Jobs workspace.
+1. Confirm that PR #2 has been merged and the matching actions are available from the `cohortbuild_md` Jobs workspace.
 2. Confirm the methodological settings in Section 6.
 3. Run the hip-2024 pipeline on TPP with **Force run dependencies**.
 4. Review matching performance in Airlock.
