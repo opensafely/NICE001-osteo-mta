@@ -167,8 +167,9 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
         .exists_for_patient()
     )
 
-    # Create boolean indicator for if on the candidate date, the patient
-    # - Does not have hip fracture in prior 6 months
+    # Create boolean indicator for if the admission date is an eligible index date for the patient
+    # i.e. on the candidate hip fracture admission date, the patient
+    # - Does not have a hip fracture in prior 6 months
     # - Is aged 18 or over
     # - Has prior 6 months registration
     is_eligible_index = (
@@ -234,7 +235,8 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
     )
 
     # Examine next hip fracture admissions
-    # (Keep only hip fracture admissions after the candidate date, per patient)
+    # Keep only hip fracture admissions after the candidate date, per patient
+    # Drops admission records with same admission date as candidate date
     remaining_candidate_hip_admissions = (
         remaining_candidate_hip_admissions.where(
             apcs.admission_date.is_after(candidate_date)
