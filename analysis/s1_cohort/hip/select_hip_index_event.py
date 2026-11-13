@@ -2,11 +2,11 @@
 
 # In detail:
 # - Reshape hip fracture table from dataset_definition.py from one row per patient 
-#   (with columns for 15 distinct candidate admission dates)
+#   (with columns for max n number of distinct candidate admission dates)
 #   to one row per admission date that meets the additional eligibility criteria 
 #   (at admission date, patient aged 18 or above, has no hip fracture in prior 6 months
 #   and has at least 6 months GP practice registration),
-# - Exclude patients with more than 15 candidate admission dates (no eligibility criteria applied)
+# - Exclude patients with more than max n candidate admission dates (no eligibility criteria applied)
 # - Randomly select one eligible hip fracture admission date per patient to be the hip fracture index date for the patient
 
 from hashlib import sha256
@@ -44,12 +44,12 @@ def as_boolean(series):
 patients = pd.read_csv(INPUT_FILE)
 
 # Keep eligible index dates only ---------------------------------------------------------
-# Pivot data from wide to long for 1st to 15th candidate admission date ------------------
+# Pivot data from wide to long for 1st to MAX_CANDIDATE_DATES (nth) candidate admission date ------------------
 
 # Create empty list for appending loop outputs
 candidate_frames = []
 
-# Loop through 1 to 15 (nth) candidate number
+# Loop through 1 to max n candidate number
 for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
 
     # Make column names (to get relevant cols for nth candidate_number from the output table)
@@ -113,16 +113,16 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
     # Add dataframe with patients with eligible admission for nth candidate number to list
     candidate_frames.append(candidate)
 
-# Bind all 15 dataframes with eligible admissions together by row - create new row index
+# Bind all dataframes with eligible admissions together by row - create new row index
 eligible_candidates = pd.concat(
     candidate_frames,
     ignore_index=True,
 )
 
-# Separate out flag column for whether patient has more than 15 candidate dates (irrespective of eligibility) -----------
+# Separate out flag column for whether patient has more than MAX_CANDIDATE_DATES (n) candidate dates (irrespective of eligibility) -----------
 # from original output table
 
-# Get patient ID and >15 candidate date indicator column
+# Get patient ID and more than max candidate dates indicator column
 overflow = patients[
     [
         "patient_id",
@@ -130,7 +130,7 @@ overflow = patients[
     ]
 ].copy()
 
-# Convert >15 candidate date indicator to boolean using custom function - as new col
+# Convert more than max candidate dates indicator to boolean using custom function - as new col
 overflow["has_candidate_overflow"] = as_boolean(
     overflow["has_more_than_15_candidate_hip_dates"]
 )
@@ -144,12 +144,12 @@ overflow = overflow[
     ]
 ]
 
-# Drop patients with more than 15 candidate admission dates -------------------------------------
+# Drop patients with more than max candidate admission dates -------------------------------------
 # (not eligible index dates, this is all candidate admission dates, regardless of how many meet 
 # the additional three eligibility criteria)
 
 # Patients with overflow are not selected because their full set of
-# candidate dates is unavailable. Selecting on from only their first 15 could be biased
+# candidate dates is unavailable. Selecting one from only their first max n admissions could be biased
 
 # Join eligible index date table with overflow table
 eligible_candidates = eligible_candidates.merge(
@@ -158,7 +158,7 @@ eligible_candidates = eligible_candidates.merge(
     how="left",
 )
 
-# Keep only patients with no overflow (>15 candidate admissions) for selection
+# Keep only patients with no overflow (1 to max n candidate admissions) for selection
 selection_pool = eligible_candidates.loc[
     ~eligible_candidates["has_candidate_overflow"]
 ].copy()
@@ -202,7 +202,7 @@ eligible_counts = (
 
 # Sorts the candidate rows per patient by the hash and the candidate number and selects the first one,
 # so the final table for hip fracture patients contains one eligible candidate admission as the index date
-# per patient with no more than 15 candidate admissions for hip fracture in that period
+# per patient with no more than max n candidate admissions for hip fracture in that period
 # Join count of eligible candidate admission dates for patient
 selected_cases = (
     selection_pool
@@ -263,7 +263,7 @@ selected_cases[output_columns].to_csv(
 # Create QA table to check selection ----------------------------------------------------------------------
 # - patients_in_candidate_dataset: Initial number of patients from dataset_definition.py
 # - patients_with_eligible_candidate: Number of patients with eligible candidate admissions
-# - patients_with_candidate_overflow: Number of patients with more than 15 candidate admissions (dropped)
+# - patients_with_candidate_overflow: Number of patients with more than max n candidate admissions (dropped)
 # - selected_hip_index_cases: Final number of patients selected
 qa = pd.DataFrame(
     {

@@ -1,7 +1,7 @@
 # Temporary QA dataset for reconstructing and testing hip-fracture
 # candidate dates. This is not the final eligible analysis cohort.
 
-from ehrql import case, create_dataset, codelist_from_csv, months, when, show
+from ehrql import case, create_dataset, codelist_from_csv, months, when
 
 from ehrql.tables.tpp import (
     addresses,
@@ -28,6 +28,7 @@ hip_fracture_snomed_codes = codelist_from_csv(
 
 # Get apcs (admission spells) records where hip fracture ICD-10 codes 
 # is in any diagnosis (all primary and secondary diagnoses)
+# from any time period
 hip_admissions = apcs.where(
     apcs.all_diagnoses.contains_any_of(hip_fracture_icd_codes)
 )
@@ -62,9 +63,9 @@ dataset.define_population(candidate_hip_admissions.exists_for_patient())
 # Get patient's sex
 dataset.sex = patients.sex
 
-# Loop through eligible hip fracture admissions per patient from earliest to latest date ---------
-# and find all eligible index dates (max 15) -----------------------------------------------------
-# Get patient info at admission date and assess if admission spell meets criteria
+# Loop through hip fracture admissions per patient from earliest to latest date ---------
+# and find all admission dates (up to threshold set by MAX_CANDIDATE_DATES) ------------------------------------------------
+# Get patient info at admission date and assess if admission spell meets eligibility criteria
 # - No hip fracture in 6 months prior (in GP records or hospital admissions) to admission date
 # - At least 6 months prior GP practice registration at admission date
 # - Aged 18 or over at admission date
@@ -75,7 +76,7 @@ MAX_CANDIDATE_DATES = 15
 # For first loop run, start with all candidate hip fracture admissions
 remaining_candidate_hip_admissions = candidate_hip_admissions
 
-# Loop through 15 times
+# Loop through MAX_CANDIDATE_DATES times
 for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
 
     # Get earliest hip fracture admission per patient
@@ -169,7 +170,7 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
 
     # Create boolean indicator for if the admission date is an eligible index date for the patient
     # i.e. on the candidate hip fracture admission date, the patient
-    # - Does not have a hip fracture in prior 6 months
+    # - Has no admission or GP record of hip fracture in prior 6 months
     # - Is aged 18 or over
     # - Has prior 6 months registration
     is_eligible_index = (
@@ -235,7 +236,7 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
     )
 
     # Examine next hip fracture admissions
-    # Keep only hip fracture admissions after the candidate date, per patient
+    # Keep only hip fracture admissions after the candidate date examined in this loop, per patient
     # Drops admission records with same admission date as candidate date
     remaining_candidate_hip_admissions = (
         remaining_candidate_hip_admissions.where(
@@ -243,7 +244,7 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
         )
     )
 
-# After looping through first 15 eligible hip fracture admission dates per patient ----------------
+# After looping through first MAX_CANDIDATE_DATES (nth) candidate hip fracture admission dates per patient ----------------
 
 # Create boolean indicator for if patient has more than max distinct candidate admission dates    
 dataset.add_column(
@@ -251,9 +252,8 @@ dataset.add_column(
     remaining_candidate_hip_admissions.exists_for_patient(),
 )
 
-# Count number of hip fracture admission spell records in selected period, per patient
-# irrespective of whether the admissions meet the additional criteria
-# (no hip fracture in prior 6 months, prior 6 month registration, aged 18 or over)
+# Count number of hip fracture admission spells in selected period, per patient
+# irrespective of whether the admissions meet the additional criteria to be the index date
 # Counting records, not distinct admission dates
 dataset.number_of_candidate_hip_admission_records = (
     candidate_hip_admissions.count_for_patient()
