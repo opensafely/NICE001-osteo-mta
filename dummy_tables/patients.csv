@@ -1,0 +1,11 @@
+patient_id,date_of_birth,sex
+1,1992-06-01,unknown
+8,2006-06-01,unknown
+11,1952-12-01,female
+12,2004-03-01,female
+13,2011-08-01,male
+21,1939-06-01,intersex
+27,2016-08-01,female
+33,2023-01-01,intersex
+36,1930-10-01,male
+37,2016-05-01,female
