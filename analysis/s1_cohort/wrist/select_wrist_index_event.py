@@ -105,7 +105,7 @@ for source_name in ["hospital", "gp"]:
         # Create column with candidate number
         candidate["source_candidate_number"] = candidate_number
 
-        # Convert index date from string to datetime
+        # Convert index date to datetime
         candidate["index_date"] = pd.to_datetime(
             candidate["index_date"],
             errors="coerce",

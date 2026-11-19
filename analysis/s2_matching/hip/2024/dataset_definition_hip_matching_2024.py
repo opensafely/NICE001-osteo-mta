@@ -22,7 +22,7 @@ from ehrql.tables.tpp import (
 # Date to get patient info for potential controls - start of 2024
 ANCHOR_DATE = "2024-01-01"
 
-# 
+# Date 6 months before anchor date
 FRACTURE_WINDOW_START = "2023-07-01"
 
 dataset = create_dataset()
