@@ -2,11 +2,15 @@
 
 # Current matching action does not allow time-varying matching variables
 # It matches on columns before copying the index date to the control
-# So can't get registration date and age for potential matches at the case's index date
-# Therefore current trial solution is getting all cases with index date in 2024
-# Getting potential matches and using 1st Jan 2024 as date to get their practice ID and age
-# Matching criteria in SAP includes no same fracture in 6 months prior to index date
-# So using 6 months before 1st Jan 2024 is 1st July 2023
+# So can't use practice ID, age, address, whether they have been registered for at least 6 months
+# and recent hip fracture history for potential matches at the case's index date for matching
+
+# Therefore current trial solution is:
+# 1. Getting all cases with index date in 2024
+# 2. (This script) Getting potential matches and using 1st Jan 2024 as a proxy date to get their registration, address and age 
+# 3. Matching with the potential matches info on that proxy date
+# 4. Then getting the registration, address and age for the matches on the index date that they inherit from the case they are matched to
+# 5. And then keeping only the matches where the matching criteria are still valid
 
 from ehrql import case, codelist_from_csv, create_dataset, when
 from ehrql.tables.tpp import (
@@ -25,6 +29,7 @@ ANCHOR_DATE = "2024-01-01"
 # Date 6 months before anchor date
 FRACTURE_WINDOW_START = "2023-07-01"
 
+# Create dataset
 dataset = create_dataset()
 
 # Load fracture ICD-10 and SNOMED codelists ------------------------------
@@ -111,7 +116,7 @@ dataset.define_population(
     & address_at_anchor.exists_for_patient()
 )
 
-# Specify columns to include in output
+# Specify columns to include in output dataset
 dataset.age = age_at_anchor
 dataset.sex = patients.sex
 dataset.practice = registration_at_anchor.practice_pseudo_id

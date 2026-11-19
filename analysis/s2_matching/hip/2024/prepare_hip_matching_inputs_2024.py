@@ -198,5 +198,6 @@ qa = pd.DataFrame(
     }
 )
 
+# Write
 qa.to_csv(QA_OUTPUT_FILE, index=False)
 
