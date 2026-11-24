@@ -1,8 +1,22 @@
+# Prepare hip fracture cases with index date in 2024 and potential controls for matching action
+
+# Cases
+# - Get hip fracture cases from analysis/s1_cohort/hip/select_hip_index_event.py 
+# - Filter to those with index date in 2024 and with non-missing data for the matching variables 
+#   (age, sex, practice ID and care home status)
+# - Write patient ID list and matching variables to CSV
+
+# Controls
+# - Get potential controls with matching variable info (registration status, practice ID, address) extracted for 1 Jan 2024.
+#   From s2_matching/hip/2024/dataset_definition_hip_matching_2024.py exclude cases, and get their matching variables
+# - Remove cases from potential controls
+# - Write patient ID list and matching variables to CSV
+
 from pathlib import Path
 
 import pandas as pd
 
-
+# Specify paths for files
 SELECTED_CASES_FILE = Path(
     "output/selected_hip_index_cases.csv"
 )
@@ -20,7 +34,7 @@ QA_OUTPUT_FILE = Path(
     "output/hip_matching_inputs_2024_qa.csv"
 )
 
-
+# Create function to ensure boolean columns defined properly
 def as_boolean(series):
     if pd.api.types.is_bool_dtype(series):
         return series.fillna(False)
@@ -31,15 +45,21 @@ def as_boolean(series):
         .isin(["T", "TRUE", "1"])
     )
 
-
+# Read in hip fracture cases
 selected_cases = pd.read_csv(SELECTED_CASES_FILE)
+
+# Read in table with potential controls for hip fracture cases with index date in 2024
 attributes = pd.read_csv(ATTRIBUTES_FILE)
 
+# Cases -------------------------------------------------------------------------------------------
+
+# Convert index date to datetime
 selected_cases["index_date"] = pd.to_datetime(
     selected_cases["index_date"],
     errors="coerce",
 )
 
+# Select cases with an index date in 2024
 cases_2024 = selected_cases.loc[
     selected_cases["index_date"].between(
         "2024-01-01",
@@ -47,8 +67,10 @@ cases_2024 = selected_cases.loc[
     )
 ].copy()
 
+# Get unique patient IDs for hip fracture cases with index date in 2024
 cases_2024_patient_ids = set(cases_2024["patient_id"])
 
+# Rename columns and copy to table
 cases = cases_2024.rename(
     columns={
         "age_at_index": "age",
@@ -67,6 +89,7 @@ cases = cases_2024.rename(
     ]
 ].copy()
 
+# Convert age and practice to integer
 cases["age"] = pd.to_numeric(
     cases["age"],
     errors="coerce",
@@ -76,16 +99,23 @@ cases["practice"] = pd.to_numeric(
     errors="coerce",
 ).astype("Int64")
 
+# Check each patient as age, sex, practice and care home status
 complete_case_attributes = cases[
     ["age", "sex", "practice", "care_home"]
 ].notna().all(axis=1)
 
+# Filter cases for only those with value for age, sex, practice and care home status
 cases = cases.loc[complete_case_attributes].copy()
+
+# Potential controls --------------------------------------------------------------------------------
 
 # Keep the January pool broad. Registration and fracture eligibility are
 # checked after controls inherit their matched case's exact index date.
+
+# Copy table read in for potential controls
 controls = attributes.copy()
 
+# Convert age and practice to integer
 controls["age"] = pd.to_numeric(
     controls["age"],
     errors="coerce",
@@ -95,14 +125,17 @@ controls["practice"] = pd.to_numeric(
     errors="coerce",
 ).astype("Int64")
 
+# Drop hip fracture cases with index date in 2024 from potential controls
 controls = controls.loc[
     ~controls["patient_id"].isin(cases_2024_patient_ids)
 ]
 
+# Format index date for cases into string
 cases["index_date"] = cases["index_date"].dt.strftime(
     "%Y-%m-%d"
 )
 
+# Columns required for matching
 matching_columns = [
     "patient_id",
     "age",
@@ -111,6 +144,9 @@ matching_columns = [
     "care_home",
 ]
 
+# Write to CSV ---------------------------------------------------------------------
+
+# Write hip fracture cases with index date in 2024 and their matching variables
 cases[
     ["patient_id", "index_date", "fracture_type"]
     + matching_columns[1:]
@@ -120,12 +156,23 @@ cases[
     compression="gzip",
 )
 
+# Write potential controls and their matching variables
+# Not yet excluding if:
+# - Has hip fracture in 6 months prior to anchor date
+# - Registered for less than 6 months at anchor date
 controls[matching_columns].to_csv(
     CONTROLS_OUTPUT_FILE,
     index=False,
     compression="gzip",
 )
 
+# Table for QA ---------------------------------------------------------------------------
+# - Hip fracture cases with index date in 2024
+# - Hip fracture cases with index date in 2024 with non-missing age, sex, practice ID and care home status
+# - Hip fracture cases with index date in 2024 with missing age, sex, practice ID or care home status
+# - Potential controls (aged 17 or more at 1 Jan 2024, not null sex, registered and address found on 1 Jan 2024)
+# - Potential controls with 6 month prior registration
+# - Potential controls with no hip fracture in 6 months before 1 Jan 2024
 qa = pd.DataFrame(
     {
         "metric": [
@@ -151,4 +198,6 @@ qa = pd.DataFrame(
     }
 )
 
+# Write
 qa.to_csv(QA_OUTPUT_FILE, index=False)
+

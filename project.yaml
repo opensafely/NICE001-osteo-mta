@@ -160,6 +160,19 @@ actions:
         controls: output/hip_potential_controls_2024_matching.csv.gz
         qa: output/hip_matching_inputs_2024_qa.csv
 
+  # Run OpenSAFELY matching action
+  # Matches without replacement
+
+  # Configuration
+  # - 4 matches per case
+  # - Match on:
+  #   - Categories: sex, practice ID and care home
+  #   - Integer: age (+/- 3)
+  # - Age is highest priority for matching
+  # - 1 minimum match per case (cases with no matches are dropped)
+  # - Index date for match will be the same as the case
+  # - Drop cases from potential control list before matching
+
   match_hip_2024:
     run: >
       matching:v1.2.6

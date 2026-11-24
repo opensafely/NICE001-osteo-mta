@@ -3,14 +3,13 @@ from pathlib import Path
 
 import pandas as pd
 
-
+# Repeats code in select_hip_index_event.py -------------------------------------------
 CANDIDATE_FILE = Path("output/dataset.csv.gz")
 SELECTED_FILE = Path("output/selected_hip_index_cases.csv")
 REPORT_FILE = Path("output/hip_index_selection_check.txt")
 
 MAX_CANDIDATE_DATES = 15
 RANDOM_SEED = "hip-index-selection-v1"
-
 
 def as_boolean(series):
     if pd.api.types.is_bool_dtype(series):
@@ -25,11 +24,13 @@ def as_boolean(series):
 
 patients = pd.read_csv(CANDIDATE_FILE)
 
+# Read in output file from select_hip_index_event.py - selected hip fracture patients
 actual = pd.read_csv(
     SELECTED_FILE,
     parse_dates=["index_date"],
 )
 
+# Rerun selection steps in select_hip_index_event.py to check that hash is reproducible ----------
 candidate_frames = []
 
 for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
@@ -142,6 +143,7 @@ eligible_counts = (
     .reset_index()
 )
 
+# Store selected patients (same method as select_hip_index_event.py) as QA table ------------------
 expected = (
     selection_pool
     .sort_values(
@@ -175,11 +177,22 @@ comparison_columns = [
     "care_home_at_index",
 ]
 
+# Checks ----------------------------------------------------------------------------------------
+# If condition is True, program continues running
+
+# Check patient ID is unique in selected patients
 assert actual["patient_id"].is_unique
+
+# Check that no missing index date for selected patients
 assert not actual["index_date"].isna().any()
+
+# Check that fracture type assigned is "hip" for all selected patients
 assert (actual["fracture_type"] == "hip").all()
+
+# Check that index source is "hospital" for all selected patients
 assert (actual["index_source"] == "hospital").all()
 
+# Convert age at index in the selection output table (holds selected patients) and QA table to integer
 actual["age_at_index"] = pd.to_numeric(
     actual["age_at_index"],
     errors="coerce",
@@ -190,6 +203,7 @@ expected["age_at_index"] = pd.to_numeric(
     errors="coerce",
 ).astype("Int64")
 
+# Convert practice ID in the selection output and QA table to integer
 actual["practice_at_index"] = pd.to_numeric(
     actual["practice_at_index"],
     errors="coerce",
@@ -200,24 +214,31 @@ expected["practice_at_index"] = pd.to_numeric(
     errors="coerce",
 ).astype("Int64")
 
+# Reorder columns in selection output table 
 actual = (
     actual[comparison_columns]
     .sort_values("patient_id")
     .reset_index(drop=True)
 )
 
+# Reorder columns in QA table to same order as selection output table
 expected = (
     expected[comparison_columns]
     .sort_values("patient_id")
     .reset_index(drop=True)
 )
 
+# Check that the selection output table and QA table are the same
+# Ignore datatype difference
+# Raises error if tables are not the same and script stops running
 pd.testing.assert_frame_equal(
     actual,
     expected,
     check_dtype=False,
 )
 
+# Report QA results
+# Only get here if the checks above are passed
 report = (
     "Hip index selection checks: All OK!\n"
     f"Eligible non-overflow patients checked: {len(expected)}\n"
@@ -227,6 +248,8 @@ report = (
     "Patients with candidate overflow were excluded.\n"
 )
 
+# Write QA check results to txt file
 REPORT_FILE.write_text(report, encoding="utf-8")
 
+# Print QA check results
 print(report, end="")
