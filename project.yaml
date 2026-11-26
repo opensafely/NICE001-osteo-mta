@@ -372,3 +372,18 @@ actions:
     outputs:
       moderately_sensitive:
         qa: output/final_hip_matching_2024_qa_sdc.csv
+
+  compare_hip_matching_anchors_2024:
+    run: >
+      python:v2 python
+      analysis/s2_matching/hip/2024/compare_hip_matching_anchors_2024.py
+    needs:
+      - prepare_hip_matching_inputs_2024
+      - prepare_hip_matching_inputs_first_half_2024
+      - prepare_hip_matching_inputs_july_2024
+      - finalise_hip_matches_2024
+      - finalise_hip_matches_first_half_2024
+      - finalise_hip_matches_july_2024
+    outputs:
+      moderately_sensitive:
+        comparison: output/hip_matching_anchor_comparison_2024_sdc.csv
