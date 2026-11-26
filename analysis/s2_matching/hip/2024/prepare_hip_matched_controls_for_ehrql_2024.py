@@ -29,6 +29,13 @@ if missing_columns:
         + ", ".join(sorted(missing_columns))
     )
 
+self_matches = matched_controls["patient_id"].eq(matched_controls["set_id"])
+
+if self_matches.any():
+    raise ValueError(
+        f"Found {self_matches.sum()} provisional self-match(es)"
+    )
+
 matched_controls["index_date"] = pd.to_datetime(
     matched_controls["index_date"],
     errors="coerce",

@@ -47,8 +47,6 @@ cases_2024 = selected_cases.loc[
     )
 ].copy()
 
-cases_2024_patient_ids = set(cases_2024["patient_id"])
-
 cases = cases_2024.rename(
     columns={
         "age_at_index": "age",
@@ -90,14 +88,11 @@ controls["age"] = pd.to_numeric(
     controls["age"],
     errors="coerce",
 ).astype("Int64")
+
 controls["practice"] = pd.to_numeric(
     controls["practice"],
     errors="coerce",
 ).astype("Int64")
-
-controls = controls.loc[
-    ~controls["patient_id"].isin(cases_2024_patient_ids)
-]
 
 cases["index_date"] = cases["index_date"].dt.strftime(
     "%Y-%m-%d"

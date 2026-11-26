@@ -162,25 +162,12 @@ actions:
 
   match_hip_2024:
     run: >
-      matching:v1.2.6
+      python:v2 python -m osmatching.__main__
       --cases output/hip_cases_2024_matching.csv.gz
       --controls output/hip_potential_controls_2024_matching.csv.gz
+      --config-file analysis/s2_matching/hip/2024/matching_config_hip_2024.json
     needs:
       - prepare_hip_matching_inputs_2024
-    config:
-      matches_per_case: 4
-      min_matches_per_case: 1
-      match_variables:
-        sex: category
-        age: 3
-        practice: category
-        care_home: category
-      closest_match_variables:
-        - age
-      index_date_variable: index_date
-      generate_match_index_date: no_offset
-      drop_cases_from_matches: true
-      output_suffix: _hip_2024
     outputs:
       highly_sensitive:
         matched_cases: output/matched_cases_hip_2024.arrow
