@@ -135,13 +135,10 @@ for candidate_number in range(1, MAX_CANDIDATE_DATES + 1):
     )
 
     has_6m_registration = (
-        candidate_date.is_not_null()
-        & practice_registrations
-        .spanning(
-            candidate_date - months(6),
-            candidate_date,
+        registration_at_candidate_date.exists_for_patient()
+    & registration_at_candidate_date.start_date.is_on_or_before(
+        candidate_date - months(6)
         )
-        .exists_for_patient()
     )
 
     is_eligible_index = (

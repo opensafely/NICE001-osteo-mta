@@ -60,9 +60,10 @@ care_home_status_at_index = case(
 )
 
 has_6m_registration_at_index = (
-    practice_registrations
-    .spanning(index_date - months(6), index_date)
-    .exists_for_patient()
+     registration_at_index.exists_for_patient()
+    & registration_at_index.start_date.is_on_or_before(
+        index_date - months(6)
+    )
 )
 
 hip_admissions_in_6m_window = apcs.where(
