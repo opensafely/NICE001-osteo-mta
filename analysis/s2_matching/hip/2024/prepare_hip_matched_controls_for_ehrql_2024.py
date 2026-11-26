@@ -1,14 +1,26 @@
+from argparse import ArgumentParser
 from pathlib import Path
 
 import pandas as pd
 
 
-INPUT_FILE = Path(
-    "output/matched_matches_hip_2024.arrow"
-)
-OUTPUT_FILE = Path(
-    "output/hip_matched_controls_for_ehrql_2024.csv.gz"
-)
+parser = ArgumentParser()
+window = parser.add_mutually_exclusive_group()
+window.add_argument("--july", action="store_true")
+window.add_argument("--first-half", action="store_true")
+args = parser.parse_args()
+
+if args.first_half:
+    period = "first_half_2024"
+elif args.july:
+    period = "july_2024"
+else:
+    period = "2024"
+
+suffix = f"hip_{period}"
+
+INPUT_FILE = Path(f"output/matched_matches_{suffix}.arrow")
+OUTPUT_FILE = Path(f"output/hip_matched_controls_for_ehrql_{period}.csv.gz")
 
 
 matched_controls = pd.read_feather(INPUT_FILE)
@@ -27,6 +39,13 @@ if missing_columns:
     raise ValueError(
         "Matched-control file is missing columns: "
         + ", ".join(sorted(missing_columns))
+    )
+
+self_matches = matched_controls["patient_id"].eq(matched_controls["set_id"])
+
+if self_matches.any():
+    raise ValueError(
+        f"Found {self_matches.sum()} provisional self-match(es)"
     )
 
 matched_controls["index_date"] = pd.to_datetime(

@@ -1,4 +1,4 @@
-from ehrql import case, codelist_from_csv, create_dataset, when
+from ehrql import case, codelist_from_csv, create_dataset, get_parameter, when
 from ehrql.tables.tpp import (
     addresses,
     apcs,
@@ -8,8 +8,11 @@ from ehrql.tables.tpp import (
 )
 
 
-ANCHOR_DATE = "2024-01-01"
-FRACTURE_WINDOW_START = "2023-07-01"
+ANCHOR_DATE = get_parameter("anchor_date", default="2024-01-01")
+FRACTURE_WINDOW_START = {
+    "2024-01-01": "2023-07-01",
+    "2024-07-01": "2024-01-01",
+}[ANCHOR_DATE]
 
 dataset = create_dataset()
 

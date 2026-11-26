@@ -6,6 +6,7 @@ from ehrql import (
     create_dataset,
     months,
     table_from_file,
+    get_parameter,
     when,
 )
 from ehrql.tables.tpp import (
@@ -17,8 +18,9 @@ from ehrql.tables.tpp import (
 )
 
 
-MATCHED_CONTROLS_FILE = (
-    "output/hip_matched_controls_for_ehrql_2024.csv.gz"
+MATCHED_CONTROLS_FILE = get_parameter(
+    "matched_controls_file",
+    default="output/hip_matched_controls_for_ehrql_2024.csv.gz",
 )
 
 matched_controls = table_from_file(
@@ -58,9 +60,10 @@ care_home_status_at_index = case(
 )
 
 has_6m_registration_at_index = (
-    practice_registrations
-    .spanning(index_date - months(6), index_date)
-    .exists_for_patient()
+     registration_at_index.exists_for_patient()
+    & registration_at_index.start_date.is_on_or_before(
+        index_date - months(6)
+    )
 )
 
 hip_admissions_in_6m_window = apcs.where(

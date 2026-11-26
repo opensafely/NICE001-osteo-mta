@@ -1,24 +1,34 @@
+from argparse import ArgumentParser
 from pathlib import Path
 
 import pandas as pd
 
 
-SELECTED_CASES_FILE = Path(
-    "output/selected_hip_index_cases.csv"
-)
-ATTRIBUTES_FILE = Path(
-    "output/hip_matching_attributes_2024.csv.gz"
-)
+parser = ArgumentParser()
+window = parser.add_mutually_exclusive_group()
+window.add_argument("--july", action="store_true")
+window.add_argument("--first-half", action="store_true")
+args = parser.parse_args()
 
-CASES_OUTPUT_FILE = Path(
-    "output/hip_cases_2024_matching.csv.gz"
-)
+if args.july:
+    period = "july_2024"
+    case_start, case_end = "2024-07-01", "2024-12-31"
+elif args.first_half:
+    period = "first_half_2024"
+    case_start, case_end = "2024-01-01", "2024-06-30"
+else:
+    period = "2024"
+    case_start, case_end = "2024-01-01", "2024-12-31"
+
+snapshot_period = "july_2024" if args.july else "2024"
+
+SELECTED_CASES_FILE = Path("output/selected_hip_index_cases.csv")
+ATTRIBUTES_FILE = Path(f"output/hip_matching_attributes_{snapshot_period}.csv.gz")
+CASES_OUTPUT_FILE = Path(f"output/hip_cases_{period}_matching.csv.gz")
 CONTROLS_OUTPUT_FILE = Path(
-    "output/hip_potential_controls_2024_matching.csv.gz"
+    f"output/hip_potential_controls_{period}_matching.csv.gz"
 )
-QA_OUTPUT_FILE = Path(
-    "output/hip_matching_inputs_2024_qa.csv"
-)
+QA_OUTPUT_FILE = Path(f"output/hip_matching_inputs_{period}_qa.csv")
 
 
 def as_boolean(series):
@@ -42,12 +52,10 @@ selected_cases["index_date"] = pd.to_datetime(
 
 cases_2024 = selected_cases.loc[
     selected_cases["index_date"].between(
-        "2024-01-01",
-        "2024-12-31",
+        case_start,
+        case_end,
     )
 ].copy()
-
-cases_2024_patient_ids = set(cases_2024["patient_id"])
 
 cases = cases_2024.rename(
     columns={
@@ -82,22 +90,29 @@ complete_case_attributes = cases[
 
 cases = cases.loc[complete_case_attributes].copy()
 
-# Keep the January pool broad. Registration and fracture eligibility are
+# Keep the anchor pool broad. Registration and fracture eligibility are
 # checked after controls inherit their matched case's exact index date.
+
 controls = attributes.copy()
+
+if args.july:
+    first_half_controls = pd.read_feather(
+        "output/matched_matches_hip_first_half_2024.arrow",
+        columns=["patient_id"],
+    )
+    controls = controls.loc[
+        ~controls["patient_id"].isin(first_half_controls["patient_id"])
+    ].copy()
 
 controls["age"] = pd.to_numeric(
     controls["age"],
     errors="coerce",
 ).astype("Int64")
+
 controls["practice"] = pd.to_numeric(
     controls["practice"],
     errors="coerce",
 ).astype("Int64")
-
-controls = controls.loc[
-    ~controls["patient_id"].isin(cases_2024_patient_ids)
-]
 
 cases["index_date"] = cases["index_date"].dt.strftime(
     "%Y-%m-%d"
@@ -132,7 +147,7 @@ qa = pd.DataFrame(
             "selected_hip_cases_in_2024",
             "cases_with_complete_index_attributes",
             "cases_missing_index_attributes",
-            "potential_controls_at_january_anchor",
+            "potential_controls_at_anchor",
             "potential_controls_with_6m_registration_at_anchor",
             "potential_controls_without_hip_fracture_6m_anchor",
         ],

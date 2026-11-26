@@ -10,3 +10,6 @@ patient_id,address_id,care_home_is_potential_match,end_date,has_postcode,start_d
 207,207,F,,T,2020-01-01
 208,208,T,,T,2020-01-01
 209,209,F,,T,2020-01-01
+301,301,F,,T,2020-01-01
+302,302,F,,T,2024-02-01
+303,303,F,,T,2020-01-01
