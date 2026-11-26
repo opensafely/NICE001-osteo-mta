@@ -179,11 +179,26 @@ actions:
     needs:
       - select_hip_index_event
       - generate_hip_matching_attributes_july_2024
+      - match_hip_first_half_2024
     outputs:
       highly_sensitive:
         cases: output/hip_cases_july_2024_matching.csv.gz
         controls: output/hip_potential_controls_july_2024_matching.csv.gz
         qa: output/hip_matching_inputs_july_2024_qa.csv
+
+  prepare_hip_matching_inputs_first_half_2024:
+    run: >
+      python:v2 python
+      analysis/s2_matching/hip/2024/prepare_hip_matching_inputs_2024.py
+      --first-half
+    needs:
+      - select_hip_index_event
+      - generate_hip_matching_attributes_2024
+    outputs:
+      highly_sensitive:
+        cases: output/hip_cases_first_half_2024_matching.csv.gz
+        controls: output/hip_potential_controls_first_half_2024_matching.csv.gz
+        qa: output/hip_matching_inputs_first_half_2024_qa.csv
 
   match_hip_2024:
     run: >
@@ -216,6 +231,22 @@ actions:
         matched_combined: output/matched_combined_hip_july_2024.arrow
       moderately_sensitive:
         report: output/matching_report_hip_july_2024.txt
+
+  match_hip_first_half_2024:
+    run: >
+      python:v2 python -m osmatching.__main__
+      --cases output/hip_cases_first_half_2024_matching.csv.gz
+      --controls output/hip_potential_controls_first_half_2024_matching.csv.gz
+      --config-file analysis/s2_matching/hip/2024/matching_config_hip_first_half_2024.json
+    needs:
+      - prepare_hip_matching_inputs_first_half_2024
+    outputs:
+      highly_sensitive:
+        matched_cases: output/matched_cases_hip_first_half_2024.arrow
+        matched_controls: output/matched_matches_hip_first_half_2024.arrow
+        matched_combined: output/matched_combined_hip_first_half_2024.arrow
+      moderately_sensitive:
+        report: output/matching_report_hip_first_half_2024.txt
 
   prepare_hip_matched_controls_for_ehrql_2024:
     run: >
@@ -264,6 +295,30 @@ actions:
       highly_sensitive:
         attributes: output/hip_matched_control_attributes_july_2024.csv.gz
 
+  prepare_hip_matched_controls_for_ehrql_first_half_2024:
+    run: >
+      python:v2 python
+      analysis/s2_matching/hip/2024/prepare_hip_matched_controls_for_ehrql_2024.py
+      --first-half
+    needs:
+      - match_hip_first_half_2024
+    outputs:
+      highly_sensitive:
+        controls: output/hip_matched_controls_for_ehrql_first_half_2024.csv.gz
+
+  generate_hip_matched_control_attributes_first_half_2024:
+    run: >
+      ehrql:v1 generate-dataset
+      analysis/s2_matching/hip/2024/dataset_definition_hip_matched_controls_2024.py
+      --dummy-tables analysis/s2_matching/hip/2024/dummy_tables_hip_2024
+      --output output/hip_matched_control_attributes_first_half_2024.csv.gz
+      -- --matched_controls_file output/hip_matched_controls_for_ehrql_first_half_2024.csv.gz
+    needs:
+      - prepare_hip_matched_controls_for_ehrql_first_half_2024
+    outputs:
+      highly_sensitive:
+        attributes: output/hip_matched_control_attributes_first_half_2024.csv.gz
+
   finalise_hip_matches_2024:
     run: >
       python:v2 python
@@ -292,6 +347,21 @@ actions:
         matched_controls: output/final_matched_controls_hip_july_2024.arrow
         matched_combined: output/final_matched_combined_hip_july_2024.arrow
         qa: output/final_hip_matching_july_2024_qa.csv
+
+  finalise_hip_matches_first_half_2024:
+    run: >
+      python:v2 python
+      analysis/s2_matching/hip/2024/finalise_hip_matches_2024.py
+      --first-half
+    needs:
+      - match_hip_first_half_2024
+      - generate_hip_matched_control_attributes_first_half_2024
+    outputs:
+      highly_sensitive:
+        matched_cases: output/final_matched_cases_hip_first_half_2024.arrow
+        matched_controls: output/final_matched_controls_hip_first_half_2024.arrow
+        matched_combined: output/final_matched_combined_hip_first_half_2024.arrow
+        qa: output/final_hip_matching_first_half_2024_qa.csv
 
   prepare_hip_matching_qa_2024:
     run: >

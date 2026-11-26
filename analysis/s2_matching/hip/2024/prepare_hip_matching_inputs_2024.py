@@ -5,14 +5,25 @@ import pandas as pd
 
 
 parser = ArgumentParser()
-parser.add_argument("--july", action="store_true")
+window = parser.add_mutually_exclusive_group()
+window.add_argument("--july", action="store_true")
+window.add_argument("--first-half", action="store_true")
 args = parser.parse_args()
 
-period = "july_2024" if args.july else "2024"
-case_start = "2024-07-01" if args.july else "2024-01-01"
+if args.july:
+    period = "july_2024"
+    case_start, case_end = "2024-07-01", "2024-12-31"
+elif args.first_half:
+    period = "first_half_2024"
+    case_start, case_end = "2024-01-01", "2024-06-30"
+else:
+    period = "2024"
+    case_start, case_end = "2024-01-01", "2024-12-31"
+
+snapshot_period = "july_2024" if args.july else "2024"
 
 SELECTED_CASES_FILE = Path("output/selected_hip_index_cases.csv")
-ATTRIBUTES_FILE = Path(f"output/hip_matching_attributes_{period}.csv.gz")
+ATTRIBUTES_FILE = Path(f"output/hip_matching_attributes_{snapshot_period}.csv.gz")
 CASES_OUTPUT_FILE = Path(f"output/hip_cases_{period}_matching.csv.gz")
 CONTROLS_OUTPUT_FILE = Path(
     f"output/hip_potential_controls_{period}_matching.csv.gz"
@@ -42,7 +53,7 @@ selected_cases["index_date"] = pd.to_datetime(
 cases_2024 = selected_cases.loc[
     selected_cases["index_date"].between(
         case_start,
-        "2024-12-31",
+        case_end,
     )
 ].copy()
 
@@ -81,7 +92,17 @@ cases = cases.loc[complete_case_attributes].copy()
 
 # Keep the anchor pool broad. Registration and fracture eligibility are
 # checked after controls inherit their matched case's exact index date.
+
 controls = attributes.copy()
+
+if args.july:
+    first_half_controls = pd.read_feather(
+        "output/matched_matches_hip_first_half_2024.arrow",
+        columns=["patient_id"],
+    )
+    controls = controls.loc[
+        ~controls["patient_id"].isin(first_half_controls["patient_id"])
+    ].copy()
 
 controls["age"] = pd.to_numeric(
     controls["age"],

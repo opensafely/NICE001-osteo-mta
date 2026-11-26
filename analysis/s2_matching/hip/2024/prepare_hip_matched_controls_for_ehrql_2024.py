@@ -5,11 +5,19 @@ import pandas as pd
 
 
 parser = ArgumentParser()
-parser.add_argument("--july", action="store_true")
+window = parser.add_mutually_exclusive_group()
+window.add_argument("--july", action="store_true")
+window.add_argument("--first-half", action="store_true")
 args = parser.parse_args()
 
-suffix = "hip_july_2024" if args.july else "hip_2024"
-period = "july_2024" if args.july else "2024"
+if args.first_half:
+    period = "first_half_2024"
+elif args.july:
+    period = "july_2024"
+else:
+    period = "2024"
+
+suffix = f"hip_{period}"
 
 INPUT_FILE = Path(f"output/matched_matches_{suffix}.arrow")
 OUTPUT_FILE = Path(f"output/hip_matched_controls_for_ehrql_{period}.csv.gz")

@@ -1,0 +1,15 @@
+{
+  "matches_per_case": 4,
+  "min_matches_per_case": 1,
+  "match_variables": {
+    "sex": "category",
+    "age": 3,
+    "practice": "category",
+    "care_home": "category"
+  },
+  "closest_match_variables": ["age"],
+  "index_date_variable": "index_date",
+  "generate_match_index_date": "no_offset",
+  "drop_cases_from_matches": false,
+  "output_suffix": "_hip_first_half_2024"
+}
