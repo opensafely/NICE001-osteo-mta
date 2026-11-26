@@ -6,6 +6,7 @@ from ehrql import (
     create_dataset,
     months,
     table_from_file,
+    get_parameter,
     when,
 )
 from ehrql.tables.tpp import (
@@ -17,8 +18,9 @@ from ehrql.tables.tpp import (
 )
 
 
-MATCHED_CONTROLS_FILE = (
-    "output/hip_matched_controls_for_ehrql_2024.csv.gz"
+MATCHED_CONTROLS_FILE = get_parameter(
+    "matched_controls_file",
+    default="output/hip_matched_controls_for_ehrql_2024.csv.gz",
 )
 
 matched_controls = table_from_file(

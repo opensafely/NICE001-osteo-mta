@@ -1,30 +1,25 @@
+from argparse import ArgumentParser
 from pathlib import Path
 
 import pandas as pd
 
 
-MATCHED_CASES_FILE = Path(
-    "output/matched_cases_hip_2024.arrow"
-)
-MATCHED_CONTROLS_FILE = Path(
-    "output/matched_matches_hip_2024.arrow"
-)
+parser = ArgumentParser()
+parser.add_argument("--july", action="store_true")
+args = parser.parse_args()
+
+period = "july_2024" if args.july else "2024"
+
+MATCHED_CASES_FILE = Path(f"output/matched_cases_hip_{period}.arrow")
+MATCHED_CONTROLS_FILE = Path(f"output/matched_matches_hip_{period}.arrow")
 EXACT_ATTRIBUTES_FILE = Path(
-    "output/hip_matched_control_attributes_2024.csv.gz"
+    f"output/hip_matched_control_attributes_{period}.csv.gz"
 )
 
-FINAL_CASES_FILE = Path(
-    "output/final_matched_cases_hip_2024.arrow"
-)
-FINAL_CONTROLS_FILE = Path(
-    "output/final_matched_controls_hip_2024.arrow"
-)
-FINAL_COMBINED_FILE = Path(
-    "output/final_matched_combined_hip_2024.arrow"
-)
-QA_FILE = Path(
-    "output/final_hip_matching_2024_qa.csv"
-)
+FINAL_CASES_FILE = Path(f"output/final_matched_cases_hip_{period}.arrow")
+FINAL_CONTROLS_FILE = Path(f"output/final_matched_controls_hip_{period}.arrow")
+FINAL_COMBINED_FILE = Path(f"output/final_matched_combined_hip_{period}.arrow")
+QA_FILE = Path(f"output/final_hip_matching_{period}_qa.csv")
 
 
 def as_boolean(series):

@@ -1,14 +1,18 @@
+from argparse import ArgumentParser
 from pathlib import Path
 
 import pandas as pd
 
 
-INPUT_FILE = Path(
-    "output/matched_matches_hip_2024.arrow"
-)
-OUTPUT_FILE = Path(
-    "output/hip_matched_controls_for_ehrql_2024.csv.gz"
-)
+parser = ArgumentParser()
+parser.add_argument("--july", action="store_true")
+args = parser.parse_args()
+
+suffix = "hip_july_2024" if args.july else "hip_2024"
+period = "july_2024" if args.july else "2024"
+
+INPUT_FILE = Path(f"output/matched_matches_{suffix}.arrow")
+OUTPUT_FILE = Path(f"output/hip_matched_controls_for_ehrql_{period}.csv.gz")
 
 
 matched_controls = pd.read_feather(INPUT_FILE)

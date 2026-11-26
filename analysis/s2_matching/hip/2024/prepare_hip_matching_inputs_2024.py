@@ -1,24 +1,23 @@
+from argparse import ArgumentParser
 from pathlib import Path
 
 import pandas as pd
 
 
-SELECTED_CASES_FILE = Path(
-    "output/selected_hip_index_cases.csv"
-)
-ATTRIBUTES_FILE = Path(
-    "output/hip_matching_attributes_2024.csv.gz"
-)
+parser = ArgumentParser()
+parser.add_argument("--july", action="store_true")
+args = parser.parse_args()
 
-CASES_OUTPUT_FILE = Path(
-    "output/hip_cases_2024_matching.csv.gz"
-)
+period = "july_2024" if args.july else "2024"
+case_start = "2024-07-01" if args.july else "2024-01-01"
+
+SELECTED_CASES_FILE = Path("output/selected_hip_index_cases.csv")
+ATTRIBUTES_FILE = Path(f"output/hip_matching_attributes_{period}.csv.gz")
+CASES_OUTPUT_FILE = Path(f"output/hip_cases_{period}_matching.csv.gz")
 CONTROLS_OUTPUT_FILE = Path(
-    "output/hip_potential_controls_2024_matching.csv.gz"
+    f"output/hip_potential_controls_{period}_matching.csv.gz"
 )
-QA_OUTPUT_FILE = Path(
-    "output/hip_matching_inputs_2024_qa.csv"
-)
+QA_OUTPUT_FILE = Path(f"output/hip_matching_inputs_{period}_qa.csv")
 
 
 def as_boolean(series):
@@ -42,7 +41,7 @@ selected_cases["index_date"] = pd.to_datetime(
 
 cases_2024 = selected_cases.loc[
     selected_cases["index_date"].between(
-        "2024-01-01",
+        case_start,
         "2024-12-31",
     )
 ].copy()
@@ -80,7 +79,7 @@ complete_case_attributes = cases[
 
 cases = cases.loc[complete_case_attributes].copy()
 
-# Keep the January pool broad. Registration and fracture eligibility are
+# Keep the anchor pool broad. Registration and fracture eligibility are
 # checked after controls inherit their matched case's exact index date.
 controls = attributes.copy()
 
@@ -127,7 +126,7 @@ qa = pd.DataFrame(
             "selected_hip_cases_in_2024",
             "cases_with_complete_index_attributes",
             "cases_missing_index_attributes",
-            "potential_controls_at_january_anchor",
+            "potential_controls_at_anchor",
             "potential_controls_with_6m_registration_at_anchor",
             "potential_controls_without_hip_fracture_6m_anchor",
         ],
