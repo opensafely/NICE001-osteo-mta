@@ -1,3 +1,22 @@
 {
-  "files": {}
+  "files": {
+    "nhsd-primary-care-domain-refsets-bmival_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/bmival_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/bmival_cod/20260630/",
+      "downloaded_at": "2026-11-24 13:16:33.699936+00:00Z",
+      "sha": "2fc9695c0029388d5d4741e821688e0c4a1b19ee"
+    },
+    "nhsd-primary-care-domain-refsets-rarth_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/rarth_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/rarth_cod/20260630/",
+      "downloaded_at": "2026-11-27 17:24:40.657732+00:00Z",
+      "sha": "0a66ad781c8deff1f5a27c0ea6010651232995ca"
+    },
+    "nhsd-primary-care-domain-refsets-slupus_cod.csv": {
+      "id": "nhsd-primary-care-domain-refsets/slupus_cod/20260630",
+      "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/slupus_cod/20260630/",
+      "downloaded_at": "2026-11-27 17:24:40.775727+00:00Z",
+      "sha": "b32a08a9575f3a38b68ec029dae4f900452dd8f8"
+    }
+  }
 }

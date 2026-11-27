@@ -1,0 +1,606 @@
+code,term,class
+107691000000105,Caribbean - ethnic category 2001 census,Other
+110401000000103,Turkish - ethnic category 2001 census,White
+110751000000108,Indian or British Indian - ethnic category 2001 census,Indian
+110761000000106,English - ethnic category 2001 census,White
+110771000000104,Black and White - ethnic category 2001 census,Other
+110781000000102,Sinhalese - ethnic category 2001 census,Other Asian
+110791000000100,Black British - ethnic category 2001 census,Other
+110831000000107,Hindu - ethnic category 2001 census,Other Asian
+18167009,Black African,Black African
+185984009,White - ethnic group,White
+185988007,Black Caribbean,Black Caribbean
+185989004,"Black, other, non-mixed origin",Other
+185990008,Black British,Other
+185993005,Black - other African country,Black African
+185995003,Black Indian sub-continent,Other
+185996002,Black - other Asian,Other
+185998001,"Black - other, mixed",Other
+185999009,Other Black - Black/White orig,Other
+186000006,Other Black - Black/Asian orig,Other
+186001005,Indian (East Indian),Indian
+186002003,Pakistani,Pakistani
+186003008,Bangladeshi,Bangladeshi
+186005001,Other ethnic non-mixed (NMO),Other
+186006000,British ethnic minority specified (NMO),Other
+186007009,British ethnic minority unspecified (NMO),Other
+186010002,Other African countries (NMO),Black African
+186012005,Indian sub-continent (NMO),Other Asian
+186013000,Other Asian (NMO),Other Asian
+186014006,Irish (NMO),White
+186017004,Other European (NMO),White
+186019001,"Other ethnic, mixed origin",Other
+186020007,"Other ethnic, Black/White origin",Other
+186021006,"Other ethnic, Asian/White origin",Other
+186022004,"Other ethnic, mixed white origin",Other
+186023009,"Other ethnic, other mixed origin",Other
+186035008,New Zealand ethnic groups,Other
+186036009,New Zealand European,White
+186037000,Other European in New Zealand,White
+186039002,New Zealand Maori,Other
+186040000,Cook Island Maori,Other
+186041001,Niuean,Other
+186042008,Tokelauan,Other
+186044009,South East Asian,Other
+270460000,Black Caribbean/West India/Guyana,Black Caribbean
+270461001,Black N African/Arab/Iranian,Other
+270462008,Black East African Asian/Indo-Caribbean,Other
+270463003,Caribbean I./W.I./Guyana (NMO),Other
+270464009,N African Arab/Iranian (NMO),Other
+270465005,E Afric Asian/Indo-Carib (NMO),Other Asian
+270466006,Greek/Greek Cypriot (NMO),White
+270467002,Turkish/Turkish Cypriot (NMO),White
+275586009,Black North African,Other
+275587000,Black Arab,Other
+275588005,Black Iranian,Other
+275589002,Black East African Asian,Other
+275590006,Black Indo-Caribbean,Other
+275591005,Caribbean Island (NMO),Other
+275592003,West Indian (NMO),Other
+275593008,Guyana (NMO),Other
+275594002,North African Arab (NMO),Other
+275595001,Iranian (NMO),Other
+275596000,East African Asian (NMO),Other Asian
+275597009,Indo-Caribbean (NMO),Other Asian
+275599007,Greek (NMO),White
+275600005,Greek Cypriot (NMO),White
+275601009,Turkish (NMO),White
+275602002,Turkish Cypriot (NMO),White
+286009,Czech,White
+29343004,Bulgarian,White
+296841000000102,Yemeni,Other
+309643000,Black West Indian,Black Caribbean
+309644006,Black Guyana,Black Caribbean
+312859007,Vietnamese,Other
+315236000,White British,White
+315237009,White Irish,White
+315279003,Other black ethnic group,Other
+315280000,Asian - ethnic group,Other Asian
+315281001,Other Asian ethnic group,Other Asian
+315283003,Irish traveller,White
+315634007,Black Caribbean and White,Other
+315635008,Black African and White,Other
+33897005,Chinese,Chinese
+36329002,Slovak,White
+372148003,Other Pacific ethnic group,Other
+401213008,White Scottish,White
+401214002,Other white British ethnic group,White
+40182006,Gypsies,White
+414481008,Indian (racial group),Indian
+445343003,Romanian,White
+494131000000105,White British - ethnic category 2001 census,White
+494161000000100,White Irish - ethnic category 2001 census,White
+69865008,Fijian,Other
+718131000000106,Nepali,Other Asian
+80208004,Portuguese,White
+81560001,Tongan,Other
+86275006,Samoan,Other
+86461000000107,Sri Lankan - ethnic category 2001 census,Other Asian
+88911000000101,Irish Traveller - ethnic category 2001 census,White
+88921000000107,Traveller - ethnic category 2001 census,White
+88931000000109,Gypsy/Romany - ethnic category 2001 census,White
+88941000000100,Polish - ethnic category 2001 census,White
+88951000000102,Baltic States (Estonian or Latvian or Lithuanian) - ethnic category 2001 census,White
+88961000000104,Commonwealth of (Russian) Independent States - ethnic category 2001 census,White
+88971000000106,Albanian - ethnic category 2001 census,White
+88981000000108,Serbian - ethnic category 2001 census,White
+88991000000105,Jewish - ethnic category 2001 census,Other
+89001000000105,Arab - ethnic category 2001 census,Other
+89011000000107,Iranian - ethnic category 2001 census,Other
+89021000000101,South and Central American - ethnic category 2001 census,Other
+89031000000104,Muslim - ethnic category 2001 census,Other
+92391000000108,British or mixed British - ethnic category 2001 census,White
+92401000000106,Irish - ethnic category 2001 census,White
+92411000000108,Other White background - ethnic category 2001 census,White
+92421000000102,White and Black Caribbean - ethnic category 2001 census,Other
+92431000000100,White and Black African - ethnic category 2001 census,Other
+92441000000109,White and Asian - ethnic category 2001 census,Other
+92451000000107,Other Mixed background - ethnic category 2001 census,Other
+92461000000105,Pakistani or British Pakistani - ethnic category 2001 census,Pakistani
+92471000000103,Bangladeshi or British Bangladeshi - ethnic category 2001 census,Bangladeshi
+92481000000101,Other Asian background - ethnic category 2001 census,Other Asian
+92491000000104,African - ethnic category 2001 census,Black African
+92501000000105,Other Black background - ethnic category 2001 census,Other
+92511000000107,Chinese - ethnic category 2001 census,Chinese
+92521000000101,Other - ethnic category 2001 census,Other
+92541000000108,Scottish - ethnic category 2001 census,White
+92551000000106,Welsh - ethnic category 2001 census,White
+92561000000109,Northern Irish - ethnic category 2001 census,White
+92571000000102,Cornish - ethnic category 2001 census,White
+92581000000100,Black and Asian - ethnic category 2001 census,Other
+92591000000103,Black and Chinese - ethnic category 2001 census,Other
+92601000000109,Chinese and White - ethnic category 2001 census,Other
+92611000000106,Asian and Chinese - ethnic category 2001 census,Other
+92621000000100,Other Mixed or Mixed unspecified - ethnic category 2001 census,Other
+92631000000103,Mixed Asian - ethnic category 2001 census,Other Asian
+92641000000107,Punjabi - ethnic category 2001 census,Other Asian
+92651000000105,Kashmiri - ethnic category 2001 census,Other Asian
+92661000000108,East African Asian - ethnic category 2001 census,Other Asian
+92671000000101,Tamil - ethnic category 2001 census,Other Asian
+92681000000104,British Asian - ethnic category 2001 census,Other Asian
+92691000000102,Caribbean Asian - ethnic category 2001 census,Other Asian
+92701000000102,Other Asian or Asian unspecified - ethnic category 2001 census,Other Asian
+92711000000100,Somali - ethnic category 2001 census,Black African
+92721000000106,Mixed Black - ethnic category 2001 census,Other
+92731000000108,Nigerian - ethnic category 2001 census,Black African
+92741000000104,Other Black or Black unspecified - ethnic category 2001 census,Other
+92751000000101,Vietnamese - ethnic category 2001 census,Other
+92761000000103,Japanese - ethnic category 2001 census,Other
+92771000000105,Filipino - ethnic category 2001 census,Other
+92781000000107,Malaysian - ethnic category 2001 census,Other
+92791000000109,Cypriot (part not stated) - ethnic category 2001 census,White
+93921000000101,Ulster Scots - ethnic category 2001 census,White
+93931000000104,Greek - ethnic category 2001 census,White
+93941000000108,Greek Cypriot - ethnic category 2001 census,White
+93951000000106,Turkish Cypriot - ethnic category 2001 census,White
+93961000000109,Italian - ethnic category 2001 census,White
+93981000000100,Kosovan - ethnic category 2001 census,White
+93991000000103,Bosnian - ethnic category 2001 census,White
+94001000000108,Croatian - ethnic category 2001 census,White
+94011000000105,Other republics which made up the former Yugoslavia - ethnic category 2001 census,White
+94021000000104,Mixed Irish and other White - ethnic category 2001 census,White
+94031000000102,Other mixed White - ethnic category 2001 census,White
+94041000000106,Other White European or European unspecified or Mixed European - ethnic category 2001 census,White
+94051000000109,Other White or White unspecified - ethnic category 2001 census,White
+94061000000107,North African - ethnic category 2001 census,Other
+94071000000100,"Middle Eastern (excluding Israeli, Iranian and Arab) - ethnic category 2001 census",Other
+94081000000103,Israeli - ethnic category 2001 census,Other
+94091000000101,Kurdish - ethnic category 2001 census,Other
+94101000000109,Moroccan - ethnic category 2001 census,Other
+94111000000106,Latin American - ethnic category 2001 census,Other
+94121000000100,Multi-ethnic islands: Mauritian or Seychellois or Maldivian or St Helena - ethnic category 2001 census,Other
+94131000000103,Buddhist - ethnic category 2001 census,Other
+94141000000107,Sikh - ethnic category 2001 census,Other Asian
+94151000000105,Any other group - ethnic category 2001 census,Other
+976631000000101,White: English or Welsh or Scottish or Northern Irish or British - England and Wales ethnic category 2011 census,White
+976651000000108,White: Irish - England and Wales ethnic category 2011 census,White
+976671000000104,White: Gypsy or Irish Traveller - England and Wales ethnic category 2011 census,White
+976691000000100,White: any other White background - England and Wales ethnic category 2011 census,White
+976711000000103,Mixed multiple ethnic groups: White and Black Caribbean - England and Wales ethnic category 2011 census,Other
+976731000000106,Mixed multiple ethnic groups: White and Black African - England and Wales ethnic category 2011 census,Other
+976751000000104,Mixed multiple ethnic groups: White and Asian - England and Wales ethnic category 2011 census,Other
+976771000000108,Mixed multiple ethnic groups: any other Mixed or multiple ethnic background - England and Wales ethnic category 2011 census,Other
+976791000000107,Asian or Asian British: Indian - England and Wales ethnic category 2011 census,Indian
+976811000000108,Asian or Asian British: Pakistani - England and Wales ethnic category 2011 census,Pakistani
+976831000000100,Asian or Asian British: Bangladeshi - England and Wales ethnic category 2011 census,Bangladeshi
+976851000000107,Asian or Asian British: Chinese - England and Wales ethnic category 2011 census,Chinese
+976871000000103,Asian or Asian British: any other Asian background - England and Wales ethnic category 2011 census,Other Asian
+976891000000104,Black or African or Caribbean or Black British: African - England and Wales ethnic category 2011 census,Black African
+976911000000101,Black or African or Caribbean or Black British: Caribbean - England and Wales ethnic category 2011 census,Black Caribbean
+976931000000109,Black or African or Caribbean or Black British: other Black or African or Caribbean background - England and Wales ethnic category 2011 census,Other
+976951000000102,Other ethnic group: Arab - England and Wales ethnic category 2011 census,Other
+976971000000106,Other ethnic group: any other ethnic group - England and Wales ethnic category 2011 census,Other
+977391000000108,Mixed multiple ethnic groups: White and Black Caribbean - Northern Ireland ethnic category 2011 census,Other
+977411000000108,Mixed multiple ethnic groups: White and Black African - Northern Ireland ethnic category 2011 census,Other
+977431000000100,Mixed multiple ethnic groups: White and Asian - Northern Ireland ethnic category 2011 census,Other
+977551000000106,Mixed multiple ethnic groups: any other Mixed or multiple ethnic background - Northern Ireland ethnic category 2011 census,Other
+977591000000103,Asian or Asian British: Indian - Northern Ireland ethnic category 2011 census,Indian
+977711000000100,Asian or Asian British: Pakistani - Northern Ireland ethnic category 2011 census,Pakistani
+977731000000108,Asian or Asian British: Bangladeshi - Northern Ireland ethnic category 2011 census,Bangladeshi
+977751000000101,Asian or Asian British: Chinese - Northern Ireland ethnic category 2011 census,Chinese
+977771000000105,Asian or Asian British: any other Asian background - Northern Ireland ethnic category 2011 census,Other Asian
+977791000000109,Black or African or Caribbean or Black British: African - Northern Ireland ethnic category 2011 census,Black African
+977811000000105,Black or African or Caribbean or Black British: Caribbean - Northern Ireland ethnic category 2011 census,Black Caribbean
+977831000000102,Black or African or Caribbean or Black British: other Black or African or Caribbean background - Northern Ireland ethnic category 2011 census,Other
+977851000000109,Other ethnic group: Arab - Northern Ireland ethnic category 2011 census,Other
+977871000000100,Other ethnic group: any other ethnic group - Northern Ireland ethnic category 2011 census,Other
+977911000000103,White: Scottish - Scotland ethnic category 2011 census,White
+977931000000106,White: other British - Scotland ethnic category 2011 census,White
+977951000000104,White: Irish - Scotland ethnic category 2011 census,White
+978011000000101,White: Polish - Scotland ethnic category 2011 census,White
+978031000000109,White: any other White ethnic group - Scotland ethnic category 2011 census,White
+978051000000102,Mixed or multiple ethnic groups: any Mixed or multiple ethnic group - Scotland ethnic category 2011 census,Other
+978071000000106,"Asian or Asian Scottish or Asian British: Pakistani, Pakistani Scottish or Pakistani British - Scotland ethnic category 2011 census",Pakistani
+978111000000100,"Asian or Asian Scottish or Asian British: Indian, Indian Scottish or Indian British - Scotland ethnic category 2011 census",Indian
+978171000000105,"Asian or Asian Scottish or Asian British: Bangladeshi, Bangladeshi Scottish or Bangladeshi British - Scotland ethnic category 2011 census",Bangladeshi
+978191000000109,Asian or Asian Scottish or Asian British: Chinese - Scotland ethnic category 2011 census,Chinese
+978211000000108,Asian or Asian Scottish or Asian British: any other Asian group - Scotland ethnic category 2011 census,Other Asian
+978231000000100,"African: African, African Scottish or African British - Scotland ethnic category 2011 census",Black African
+978251000000107,African: any other African - Scotland ethnic category 2011 census,Black African
+978341000000102,"Caribbean or Black: Black, Black Scottish or Black British - Scotland ethnic category 2011 census",Black Caribbean
+978361000000101,Caribbean or Black: any other Black or Caribbean group - Scotland ethnic category 2011 census,Black Caribbean
+978381000000105,"Other ethnic group: Arab, Arab Scottish or Arab British - Scotland ethnic category 2011 census",Other
+978401000000105,Other ethnic group: any other ethnic group - Scotland ethnic category 2011 census,Other
+10008004,Ewe,Black African
+10117001,Finns,White
+10292001,Guamians,Other
+1036211000000103,Slovak Roma,White
+1036251000000104,Czech Roma,White
+1036281000000105,Hungarian Roma,White
+1036301000000106,Polish Roma,White
+1036321000000102,Romanian Roma,White
+1036341000000109,Roma,White
+1036361000000105,Bulgarian Roma,White
+10432001,Onge,Other Asian
+108342005,South Asian AND/OR Australian aborigine,Other
+113169009,Armenians,White
+113170005,Aymara,Other
+113171009,Coushatta,Other
+11794009,Kenyans,Black African
+12556008,Tamils,Other Asian
+13233008,Flathead,Other
+1340002,Malays,Other Asian
+13440006,Tanganyikans,Black African
+14045001,Caucasian,White
+14176005,Danes,White
+14470009,Tutsi,Black African
+1451003,Greeks,White
+14999008,Welsh,White
+15086000,African American,Other
+154160004,White - ethnic group,White
+154161000,White British,White
+154162007,White Irish,White
+154163002,Other white ethnic group,White
+154164008,Black Caribbean,Black Caribbean
+154165009,Black African,Black African
+154166005,"Black, other, non-mixed origin",Other
+154167001,Black British,Other
+154168006,Black Caribbean &/or W.I. &/or Guyana,Black Caribbean
+154169003,Black N African &/or Arab &/or Iranian,Other
+154170002,Black - other African country,Black African
+154171003,Black E Afric Asia &/or Indo-Caribb,Other
+154172005,Black Indian sub-continent,Other
+154173000,Black - other Asian,Other
+154174006,Black Black - other,Other
+154175007,"Black - other, mixed",Other
+154176008,Other Black - Black/White orig,Other
+154177004,Other Black - Black/Asian orig,Other
+154178009,Indian,Indian
+154179001,Pakistani,Pakistani
+154180003,Bangladeshi,Bangladeshi
+154181004,Chinese,Chinese
+154182006,Other ethnic non-mixed (NMO),Other
+154183001,Brit. ethnic minor. spec.(NMO),Other
+154184007,Brit. ethnic minor. unsp (NMO),Other
+154185008,Caribbean I. &/or W.I. &/or Guyana (NMO),Black Caribbean
+154186009,N African Arab &/or Iranian (NMO),Other
+154187000,Other African countries (NMO),Black African
+154188005,E Afric Asian &/or Indo-Carib (NMO),Other Asian
+154189002,Indian sub-continent (NMO),Indian
+154190006,Other Asian (NMO),Other Asian
+154191005,Irish (NMO),White
+154192003,Greek &/or Greek Cypriot (NMO),White
+154193008,Turkish &/or Turkish Cypriot (NMO),White
+154194002,Other European (NMO),White
+154195001,Other ethnic NEC (NMO),Other
+154196000,"Other ethnic, mixed origin",Other
+154197009,"Other ethnic, Black/White orig",Other
+154198004,"Other ethnic, Asian/White orig",Other
+154199007,"Other ethnic, mixed white orig",Other
+154200005,"Other ethnic, other mixed orig",Other
+154201009,Black Caribbean and White,Other
+154202002,Black African and White,Other
+154203007,Vietnamese,Other
+154206004,Other black ethnic group,Other
+154207008,Other Asian ethnic group,Other Asian
+154208003,Irish traveller,White
+154209006,Other ethnic group,Other
+154212009,New Zealand ethnic groups,Other
+154213004,New Zealand European,White
+154214005,Other European in New Zealand,White
+154215006,New Zealand Maori,Other
+154216007,Samoan,Other
+154217003,Cook Island Maori,Other
+154218008,Tongan,Other
+154219000,Niuean,Other
+154220006,Tokelauan,Other
+154221005,Fijian,Other
+154222003,Other Pacific ethnic group,Other
+154223008,South East Asian,Other Asian
+154224002,Chinese,Chinese
+154225001,Indian,Indian
+154226000,Other Asian,Other Asian
+154227009,Other New Zealand ethnic group,Other
+154229007,New Zealand ethnic group NOS,Other
+15801006,Kapingas,Other
+160531006,Race: West indian,Black Caribbean
+17095009,Norwegians,White
+17789004,Papuans,Other
+18575005,Oceanian,Other
+18583004,Estonians,White
+185985005,White British,White
+185986006,White Irish,White
+185987002,Other white ethnic group,White
+185991007,Black Caribbean &/or W.I. &/or Guyana,Black Caribbean
+185992000,Black N African &/or Arab &/or Iranian,Other
+185994004,Black E Afric Asia &/or Indo-Caribb,Other
+185997006,Black Black - other,Other
+186004002,Chinese,Chinese
+186008004,Caribbean I. &/or W.I. &/or Guyana (NMO),Black Caribbean
+186009007,N African Arab &/or Iranian (NMO),Other
+186011003,E Afric Asian &/or Indo-Carib (NMO),Other Asian
+186015007,Greek &/or Greek Cypriot (NMO),White
+186016008,Turkish &/or Turkish Cypriot (NMO),White
+186018009,Other ethnic NEC (NMO),Other
+186024003,Black Caribbean and White,Other
+186025002,Black African and White,Other
+186026001,Vietnamese,Other
+186029008,Other black ethnic group,Other
+186030003,Other Asian ethnic group,Other Asian
+186031004,Irish traveller,White
+186032006,Other ethnic group,Other
+186043003,Other Pacific ethnic group,Other
+186045005,Indian,Indian
+186046006,Other Asian,Other Asian
+186047002,Other New Zealand ethnic group,Other
+186048007,New Zealand ethnic group NOS,Other
+18664001,Xavante,Other
+19085009,Saipanese,Other
+1919006,Egyptians,Black African
+19434008,French,White
+20140003,Hawaiians,Other
+20291009,Lacandon,Other
+20449009,Javanese,Other Asian
+21047009,Aleuts,Other
+21868006,Madagascans,Black African
+21993009,Indonesians,Other Asian
+22007004,Shoshone,Other
+23517005,Polynesians,Other
+23534002,Melanesians,Other
+23922002,Batutsi,Black African
+24812003,Mongol,Other Asian
+25750005,Admiralty Islanders,Other
+25804004,English,White
+26215007,South Asian Aborigine,Other Asian
+2688009,Tristan da Cunhans,Other Asian
+2720008,Hututu,Black African
+27301002,Paez,Other
+27683006,Ainu,Other Asian
+27700004,Iraqi,Other
+28409002,Spaniards,White
+2852001,Bhutanese,Other Asian
+28562006,Poles,White
+28796001,Siamese,Other Asian
+28821007,Easter Islanders,Other
+315238004,Other white ethnic group,White
+315239007,Mixed ethnic census group,Other
+315240009,Black - ethnic group,Other
+315282008,Other ethnic group,Other
+31637002,Italians,White
+32045009,Georgians,White
+32513008,Dyaks,Other Asian
+32873005,Bloods,Other
+33182009,Trukese,Other
+3353005,Pueblo,Other
+34334001,New Caledonians,Other
+35007000,Utes,Other
+367505005,Caucasian (living organism),White
+3698008,Micronesians,Other
+37474002,Ghanaians,Black African
+37843006,Fulani,Black African
+38144004,Athabascans,Other
+3818007,Senegalese,Black African
+38361009,Koreans,Other
+38750003,Bororo,Other
+393199009,Gypsies,White
+394149000,Gypsies,White
+394635008,Gypsies,White
+39764005,Bantu,Black African
+40165009,Buriats,Other Asian
+4073004,Palauans,Other
+41076003,Mozambiquans,Black African
+41121000000107,Other white British ethnic group,White
+413465009,Afro-Caribbean,Black Caribbean
+413466005,Afro-Caucasian,Other
+413569000,Arab,Other
+413773004,Caucasian (racial group),White
+414152003,European,White
+414551003,Japanese,Other Asian
+414661004,Melanesian,Other
+414752008,Mixed racial group (racial group),Other
+414978006,Oriental,Other Asian
+41798002,Caroline Islanders,Other
+42632009,Andamanese,Other Asian
+4299001,Marathas,Other Asian
+43056000,Cuna,Other
+43481000000100,Other white British ethnic group,White
+43608005,Australian Aborigines,Other
+43890005,Dieguenos,Other
+44460002,Turks,Other Asian
+44881000000100,White Scottish,White
+44891000000103,Other white British ethnic group,White
+45465003,Basques,White
+46110004,Somalis,Black African
+46723002,Badagas,Other Asian
+47250000,Bruneians,Other Asian
+47327008,Mexican Indians,Other
+48118002,Yapese,Other
+48294008,Solomon Islanders,Other
+48375000,Seminole,Other
+48679001,Bogobos,Other Asian
+49202008,Gilbertese,Other
+494141000000101,White British - ethnic category 2001 census,White
+494151000000103,White British - ethnic category 2001 census,White
+494171000000107,White Irish - ethnic category 2001 census,White
+494181000000109,White Irish - ethnic category 2001 census,White
+50405005,Senoi,Other
+51750002,Hottentot,Black African
+518701000000103,Romanian,White
+518721000000107,Bulgarian,White
+519681000000108,Czech,White
+52075006,Congolese,Black African
+521000220104,Black Irish (ethnic group),Other
+53195006,Kirghiz,Other Asian
+53460002,Serbs,White
+55990000,Inca,Other
+56056003,Belgians,White
+57405008,Chenchu,Other Asian
+57539009,Navaho,Other
+58047002,Barundi,Black African
+583481000000105,Other ethnic NEC (NMO),Other
+592491000000104,Other New Zealand ethnic group,Other
+592501000000105,New Zealand ethnic group NOS,Other
+59366001,Ibo,Black African
+59487007,Syrians,Other
+59597001,Marshallese,Other
+60157000,Ellice Islanders,Other
+62598008,Venezuelan Indians,Other
+63457007,Maya,Other
+6373008,Choco,Other
+63732001,New Hebrideans,Other
+63736003,Taiwanese,Other Asian
+64483007,Indians (Hindi-speaking),Indian
+64693008,Hungarian,White
+651601000000100,Black Black - other,Other
+65776006,Blackfeet,Other
+661731000000107,Other Pacific ethnic group,Other
+661741000000103,Other Asian,Other Asian
+66406004,Huasteco,Other
+666871000000107,Other ethnic group,Other
+668681000000107,Other white ethnic group,White
+66920001,Amerind,Other
+67165000,Lapps,Other Asian
+67439005,Msutu,Black African
+67931002,Aztec,Other
+68486007,Austrians,White
+69983001,Irani,Other
+704385002,Punjabi,Other Asian
+704386001,Orang asli,Other Asian
+704387005,Kadazan,Other Asian
+704388000,Melanau,Other Asian
+704389008,Murut,Other Asian
+704390004,Bajau,Other Asian
+704391000,Bidayuh,Other Asian
+704392007,Iban,Other Asian
+710011000000101,Slovak,White
+71176007,Pygmies,Black African
+718021000000105,Portuguese,White
+718958002,Roma,White
+718959005,Czech Roma,White
+718960000,Romanian Roma,White
+718961001,Slovak Roma,White
+718962008,Bulgarian Roma,White
+718963003,Hungarian Roma,White
+718964009,Polish Roma,White
+71949006,Chippewa,Other
+72201005,Hobe,Black African
+72248007,Kikuyu,Black African
+72337002,Brazilian Indians,Other
+72809004,Icelanders,White
+733078003,Ukrainian,White
+733446001,Canadian,White
+735001008,Scandinavian,White
+73524008,Caingang,Other
+73736004,Maori,Other
+74159009,Melanuans,Other
+74302004,Apache,Other
+75301003,Mapuche,Other
+75326007,Labradors,Other
+75704009,Toba,Other
+76253004,Zulu,Black African
+76460008,Yanomama,Other
+76574004,Swiss,White
+76768002,Filipinos,Other Asian
+76775001,Ugandans,Black African
+76883002,Huichol,Other
+7695005,Germans,White
+77502007,Atacamenos,Other
+77686000,Kwakiutl,Other
+77711000000105,Other white British ethnic group,White
+79434006,Quechua,Other
+80528001,Xosa,Black African
+81035008,Pakistani (Urduspeakers),Pakistani
+8124001,West Africans,Black African
+81283004,Todas,Other Asian
+81403004,Swedes,White
+81653003,Pehuenches,Other
+81846005,Naiars,Other Asian
+82121000000108,Other white British ethnic group,White
+82174001,Shona,Black African
+83365001,Thais,Other Asian
+83584002,Luo,Black African
+83939006,Irula,Other Asian
+85163001,Russians,White
+85371009,Bushmen,Black African
+85515006,Eskimo,Other
+870448005,Khoikhoi,Black African
+87323008,Nez PercÃ©,Other
+88790004,Abyssinians (Amharas),Black African
+88839008,Sudanese,Black African
+88934004,Nigerians,Black African
+89026003,Alacaluf,Other
+90027003,Arabs,Other
+90348007,Ghashgai,Other Asian
+90822005,Gambians,Black African
+91066000,Tatars,Other Asian
+91191002,Oraons,Other Asian
+91488008,New Britons,Other
+9158000,Liberians,Black African
+9533000,Dutch,White
+976641000000105,White: English or Welsh or Scottish or Northern Irish or British - England and Wales ethnic category 2011 census,White
+976661000000106,White: Irish - England and Wales ethnic category 2011 census,White
+976681000000102,White: Gypsy or Irish Traveller - England and Wales ethnic category 2011 census,White
+976701000000100,White: any other white background - England and Wales ethnic category 2011 census,White
+976721000000109,Mixed multiple ethnic groups: white and black Caribbean - England and Wales ethnic category 2011 census,Other
+976741000000102,Mixed multiple ethnic groups: white and black African - England and Wales ethnic category 2011 census,Other
+976761000000101,Mixed multiple ethnic groups: white and Asian - England and Wales ethnic category 2011 census,Other
+976781000000105,Mixed multiple ethnic groups: any other Mixed or  Multiple ethnic background - England and Wales ethnic category 2011 census,Other
+976801000000106,Asian or Asian British: Indian - England and Wales ethnic category 2011 census,Indian
+976821000000102,Asian or Asian British: Pakistani - England and Wales ethnic category 2011 census,Pakistani
+976841000000109,Asian or Asian British: Bangladeshi - England and Wales ethnic category 2011 census,Bangladeshi
+976861000000105,Asian or Asian British: Chinese - England and Wales ethnic category 2011 census,Chinese
+976881000000101,Asian or Asian British: any other Asian background - England and Wales ethnic category 2011 census,Other Asian
+976901000000103,Black or African or Caribbean or Black British: African - England and Wales ethnic category 2011 census,Black African
+976921000000107,Black or African or Caribbean or Black British : Caribbean - England and Wales ethnic category 2011 census (finding),Black Caribbean
+976941000000100,Black or African or Caribbean or Black British : other black or African or Caribbean background - England and Wales ethnic category 2011 census,Other
+976961000000104,Other ethnic group: Arab - England and Wales ethnic category 2011 census,Other
+976981000000108,Other ethnic group: any other ethnic group - England and Wales ethnic category 2011 census,Other
+977351000000100,White - Northern Ireland ethnic category 2011 census,White
+977361000000102,White - Northern Ireland ethnic category 2011 census,White
+977371000000109,Irish Traveller - Northern Ireland ethnic category 2011 census,White
+977381000000106,Irish Traveller - Northern Ireland ethnic category 2011 census,White
+977401000000106,Mixed multiple ethnic groups: white and black Caribbean - Northern Ireland ethnic category 2011 census,Other
+977421000000102,Mixed multiple ethnic groups: white and black African - Northern Ireland ethnic category 2011 census,Other
+977441000000109,Mixed multiple ethnic groups: white and Asian - Northern Ireland ethnic category 2011 census,Other
+977561000000109,Mixed multiple ethnic groups: any other Mixed or Multiple ethnic background - Northern Ireland ethnic category 2011 census,Other
+977601000000109,Asian or Asian British: Indian - Northern Ireland ethnic category 2011 census,Indian
+977721000000106,Asian or Asian British: Pakistani - Northern Ireland ethnic category 2011 census,Pakistani
+977741000000104,Asian or Asian British: Bangladeshi - Northern Ireland ethnic category 2011 census,Bangladeshi
+977761000000103,Asian or Asian British: Chinese - Northern Ireland ethnic category 2011 census,Chinese
+977781000000107,Asian or Asian British: any other Asian background - Northern Ireland ethnic category 2011 census,Other Asian
+977801000000108,Black or African or Caribbean or Black British: African - Northern Ireland ethnic category 2011 census,Black African
+977821000000104,Black or African or Caribbean or Black British: Caribbean - Northern Ireland ethnic category 2011 census,Black Caribbean
+977841000000106,Black or African or Caribbean or Black British: other black or African or Caribbean background - Northern Ireland ethnic category 2011 census,Other
+977861000000107,Other ethnic group: Arab - Northern Ireland ethnic category 2011 census,Other
+977881000000103,Other ethnic group: any other ethnic group - Northern Ireland ethnic category 2011 census,Other
+977921000000109,White: Scottish - Scotland ethnic category 2011 census,White
+977941000000102,White: other British - Scotland ethnic category 2011 census,White
+977961000000101,White: Irish - Scotland ethnic category 2011 census,White
+977971000000108,White: Gypsy or Irish Traveller - Scotland ethnic category 2011 census,White
+977981000000105,White: Gypsy or Irish Traveller - Scotland ethnic category 2011 census,White
+978021000000107,White: Polish - Scotland ethnic category 2011 census,White
+978041000000100,White: any other white ethnic group - Scotland ethnic category 2011 census,White
+978061000000104,Mixed or multiple ethnic groups: any Mixed or Multiple ethnic group - Scotland ethnic category 2011 census,Other
+978081000000108,Asian or Asian Scottish or Asian British: Pakistani Pakistani Scottish or Pakistani British - Scotland ethnic category 2011 census,Pakistani
+978121000000106,Asian or Asian Scottish or Asian British: Indian Indian Scottish or Indian British - Scotland ethnic category 2011 census,Indian
+978181000000107,Asian or Asian Scottish or Asian British: Bangladeshi Bangladeshi Scottish or Banagaldeshi British - Scotland ethnic category 2011 census,Bangladeshi
+978201000000106,Asian or Asian Scottish or Asian British: Chinese - Scotland ethnic category 2011 census,Chinese
+978221000000102,Asian or Asian Scottish or Asian British: any other Asian group - Scotland ethnic category 2011 census,Other Asian
+978241000000109,African: African African Scottish or African British - Scotland ethnic category 2011 census,Black African
+978261000000105,African: any other African - Scotland ethnic category 2011 census,Black African
+978271000000103,"Caribbean or Black: Caribbean, Caribbean Scottish or Caribbean British - Scotland ethnic category 2011 census",Other
+978281000000101,Caribbean or Black: Caribbean Caribbean Scottish or Caribbean British - Scotland ethnic category 2011 census,Black Caribbean
+978351000000104,Caribbean or Black: Black Black Scottish or Black British - Scotland ethnic category 2011 census,Other
+978371000000108,Caribbean or Black: any other Black or Caribbean group - Scotland ethnic category 2011 census,Other
+978391000000107,"Other ethnic group: Arab, Arab Scottish or Arab British - Scotland ethnic category 2011 census",Other
+978411000000107,Other ethnic group: any other ethnic group - Scotland ethnic category 2011 census,Other
